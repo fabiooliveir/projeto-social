@@ -1,6 +1,6 @@
 # Projeto Social - Diagnóstico Educacional de Guapó-GO
 
-Projeto de diagnóstico de dados educacionais e demográficos do município de Guapó-GO, com foco na primeira infância (0-5 anos) e educação infantil (creche e pré-escola).
+Projeto de diagnóstico de dados educacionais e demográficos do município de Guapó-GO. Cobre a primeira infância (0-5 anos), a educação infantil (creche e pré-escola) e foi ampliado para toda a população em idade escolar obrigatória (**0 a 17 anos**): Ensino Fundamental (6 a 14 anos) e Ensino Médio (15 a 17 anos).
 
 ## Estrutura
 
@@ -28,6 +28,8 @@ projeto-social/
 
 ```bash
 php scripts/extrair_piramide_etaria.php
+php scripts/consolidar_serie_historica.php
+php scripts/extrair_dados_escolares_completos.php   # Diagnóstico 0-17 anos
 ```
 
 ## Painel Web (Dashboard)

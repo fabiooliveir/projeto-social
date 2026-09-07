@@ -27,6 +27,12 @@ try {
     echo "Déficit:            {$resumo['deficit_vagas_creche']} ({$resumo['taxa_desatendimento_creche_pct']}%)\n";
     echo "Meta PNE (50%):     {$resumo['meta_pne_minima_50pct']} | Faltantes: {$resumo['vagas_faltantes_para_pne']}\n";
     echo "Pré-escola:         {$resumo['vagas_pre_escola_atual_2025']}/{$resumo['populacao_4a5_anos']} ({$resumo['taxa_cobertura_pre_escola_pct']}%)\n";
+    echo "\n=== Demografia 0-17 anos (Censo 2022) ===\n";
+    echo "Fundamental I (6-10):  {$resumo['populacao_fundamental_1_6a10']}\n";
+    echo "Fundamental II (11-14):{$resumo['populacao_fundamental_2_11a14']}\n";
+    echo "Ensino Médio (15-17):  {$resumo['populacao_medio_15a17']}\n";
+    echo "Total 0-17:            {$resumo['populacao_total_escolar_0a17']}\n";
+    echo "Transição 5 anos → 1º ano EF: {$resumo['matriculas_1ano_fundamental_2025']} matrículas ({$resumo['taxa_transicao_pre_fundamental_pct']}%)\n";
     printf("[DONE] Concluído com sucesso em %.2fs!\n", $elapsed);
 
     exit(0);

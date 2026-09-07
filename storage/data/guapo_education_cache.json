@@ -4,8 +4,8 @@
         "nome": "Guapó",
         "uf": "GO"
     },
-    "atualizado_em": "2026-09-06T23:09:17-03:00",
-    "tempo_execucao_ms": 646,
+    "atualizado_em": "2026-09-06T23:40:21-03:00",
+    "tempo_execucao_ms": 653,
     "resumo_executivo": {
         "populacao_0a3_anos": 1068,
         "vagas_creche_atual_2025": 289,
@@ -15,7 +15,13 @@
         "vagas_faltantes_para_pne": 245,
         "populacao_4a5_anos": 553,
         "vagas_pre_escola_atual_2025": 514,
-        "taxa_cobertura_pre_escola_pct": 92.95
+        "taxa_cobertura_pre_escola_pct": 92.95,
+        "populacao_fundamental_1_6a10": 1482,
+        "populacao_fundamental_2_11a14": 1187,
+        "populacao_medio_15a17": 817,
+        "populacao_total_escolar_0a17": 5107,
+        "matriculas_1ano_fundamental_2025": 306,
+        "taxa_transicao_pre_fundamental_pct": 111.27
     },
     "piramide_etaria": [
         {
@@ -41,6 +47,54 @@
         {
             "idade": "5 anos",
             "populacao": 275
+        },
+        {
+            "idade": "6 anos",
+            "populacao": 295
+        },
+        {
+            "idade": "7 anos",
+            "populacao": 298
+        },
+        {
+            "idade": "8 anos",
+            "populacao": 308
+        },
+        {
+            "idade": "9 anos",
+            "populacao": 289
+        },
+        {
+            "idade": "10 anos",
+            "populacao": 292
+        },
+        {
+            "idade": "11 anos",
+            "populacao": 278
+        },
+        {
+            "idade": "12 anos",
+            "populacao": 320
+        },
+        {
+            "idade": "13 anos",
+            "populacao": 312
+        },
+        {
+            "idade": "14 anos",
+            "populacao": 277
+        },
+        {
+            "idade": "15 anos",
+            "populacao": 288
+        },
+        {
+            "idade": "16 anos",
+            "populacao": 273
+        },
+        {
+            "idade": "17 anos",
+            "populacao": 256
         }
     ],
     "series_historicas": {
@@ -56,6 +110,13 @@
             "2015": 480,
             "2022": 437,
             "2025": 514
+        },
+        "fundamental_1_ano": {
+            "2008": 213,
+            "2013": 183,
+            "2018": 228,
+            "2022": 268,
+            "2025": 306
         }
     }
 }

@@ -1,0 +1,530 @@
+{
+    "metadata": {
+        "fonte": "IBGE - Censo Demográfico 2022 (Tabela 9514) e INEP - Censo Escolar / IBGE Pesquisa 13",
+        "municipio": "Guapó (GO)",
+        "codigo_ibge": "5209200",
+        "periodo": "2008-2025",
+        "data_extracao": "2026-09-06T23:40:03-0300",
+        "api_censo": "https://apisidra.ibge.gov.br/values/t/9514/n6/5209200/v/allxp/p/last%201/c2/6794/c287/6557,6558,6559,6560,6561,6562,6563,6564,6565,6566,6567,6568,6569,6570,6571,6572,6573,6574",
+        "api_inep": "https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores",
+        "indicadores_inep": {
+            "fundamental_total": 5908,
+            "medio_total": 5913,
+            "fundamental_1o_ano": 77899,
+            "fundamental_2o_ano": 77900,
+            "fundamental_3o_ano": 77901,
+            "fundamental_4o_ano": 77902,
+            "fundamental_5o_ano": 77903,
+            "fundamental_6o_ano": 77904,
+            "fundamental_7o_ano": 77905,
+            "fundamental_8o_ano": 77906,
+            "fundamental_9o_ano": 77907,
+            "fundamental_1o_ano_municipal": 77941,
+            "fundamental_1o_ano_estadual": 77942,
+            "fundamental_1o_ano_privado": 77944
+        }
+    },
+    "populacao_por_idade": [
+        {
+            "codigo_sidra": "6557",
+            "idade": "Menos de 1 ano",
+            "populacao": 265,
+            "faixa_etaria": "0-3",
+            "etapa": "Creche"
+        },
+        {
+            "codigo_sidra": "6558",
+            "idade": "1 ano",
+            "populacao": 207,
+            "faixa_etaria": "0-3",
+            "etapa": "Creche"
+        },
+        {
+            "codigo_sidra": "6559",
+            "idade": "2 anos",
+            "populacao": 285,
+            "faixa_etaria": "0-3",
+            "etapa": "Creche"
+        },
+        {
+            "codigo_sidra": "6560",
+            "idade": "3 anos",
+            "populacao": 311,
+            "faixa_etaria": "0-3",
+            "etapa": "Creche"
+        },
+        {
+            "codigo_sidra": "6561",
+            "idade": "4 anos",
+            "populacao": 278,
+            "faixa_etaria": "4-5",
+            "etapa": "Pré-escola"
+        },
+        {
+            "codigo_sidra": "6562",
+            "idade": "5 anos",
+            "populacao": 275,
+            "faixa_etaria": "4-5",
+            "etapa": "Pré-escola"
+        },
+        {
+            "codigo_sidra": "6563",
+            "idade": "6 anos",
+            "populacao": 295,
+            "faixa_etaria": "6-10",
+            "etapa": "Ensino Fundamental (Anos Iniciais)"
+        },
+        {
+            "codigo_sidra": "6564",
+            "idade": "7 anos",
+            "populacao": 298,
+            "faixa_etaria": "6-10",
+            "etapa": "Ensino Fundamental (Anos Iniciais)"
+        },
+        {
+            "codigo_sidra": "6565",
+            "idade": "8 anos",
+            "populacao": 308,
+            "faixa_etaria": "6-10",
+            "etapa": "Ensino Fundamental (Anos Iniciais)"
+        },
+        {
+            "codigo_sidra": "6566",
+            "idade": "9 anos",
+            "populacao": 289,
+            "faixa_etaria": "6-10",
+            "etapa": "Ensino Fundamental (Anos Iniciais)"
+        },
+        {
+            "codigo_sidra": "6567",
+            "idade": "10 anos",
+            "populacao": 292,
+            "faixa_etaria": "6-10",
+            "etapa": "Ensino Fundamental (Anos Iniciais)"
+        },
+        {
+            "codigo_sidra": "6568",
+            "idade": "11 anos",
+            "populacao": 278,
+            "faixa_etaria": "11-14",
+            "etapa": "Ensino Fundamental (Anos Finais)"
+        },
+        {
+            "codigo_sidra": "6569",
+            "idade": "12 anos",
+            "populacao": 320,
+            "faixa_etaria": "11-14",
+            "etapa": "Ensino Fundamental (Anos Finais)"
+        },
+        {
+            "codigo_sidra": "6570",
+            "idade": "13 anos",
+            "populacao": 312,
+            "faixa_etaria": "11-14",
+            "etapa": "Ensino Fundamental (Anos Finais)"
+        },
+        {
+            "codigo_sidra": "6571",
+            "idade": "14 anos",
+            "populacao": 277,
+            "faixa_etaria": "11-14",
+            "etapa": "Ensino Fundamental (Anos Finais)"
+        },
+        {
+            "codigo_sidra": "6572",
+            "idade": "15 anos",
+            "populacao": 288,
+            "faixa_etaria": "15-17",
+            "etapa": "Ensino Médio"
+        },
+        {
+            "codigo_sidra": "6573",
+            "idade": "16 anos",
+            "populacao": 273,
+            "faixa_etaria": "15-17",
+            "etapa": "Ensino Médio"
+        },
+        {
+            "codigo_sidra": "6574",
+            "idade": "17 anos",
+            "populacao": 256,
+            "faixa_etaria": "15-17",
+            "etapa": "Ensino Médio"
+        }
+    ],
+    "ciclos": {
+        "creche": {
+            "etapa": "Creche",
+            "faixa": "0-3",
+            "codigos": [
+                6557,
+                6558,
+                6559,
+                6560
+            ],
+            "total": 1068,
+            "percentual_0a17": 20.91
+        },
+        "pre_escola": {
+            "etapa": "Pré-escola",
+            "faixa": "4-5",
+            "codigos": [
+                6561,
+                6562
+            ],
+            "total": 553,
+            "percentual_0a17": 10.83
+        },
+        "fundamental_1": {
+            "etapa": "Ensino Fundamental (Anos Iniciais)",
+            "faixa": "6-10",
+            "codigos": [
+                6563,
+                6564,
+                6565,
+                6566,
+                6567
+            ],
+            "total": 1482,
+            "percentual_0a17": 29.02
+        },
+        "fundamental_2": {
+            "etapa": "Ensino Fundamental (Anos Finais)",
+            "faixa": "11-14",
+            "codigos": [
+                6568,
+                6569,
+                6570,
+                6571
+            ],
+            "total": 1187,
+            "percentual_0a17": 23.24
+        },
+        "medio": {
+            "etapa": "Ensino Médio",
+            "faixa": "15-17",
+            "codigos": [
+                6572,
+                6573,
+                6574
+            ],
+            "total": 817,
+            "percentual_0a17": 16
+        },
+        "total_0a17": {
+            "etapa": "População em idade escolar",
+            "faixa": "0-17",
+            "total": 5107,
+            "percentual_0a17": 100
+        }
+    },
+    "series_historicas": {
+        "fundamental_total": {
+            "2008": 2327,
+            "2009": 2300,
+            "2010": 2320,
+            "2011": 2110,
+            "2012": 2227,
+            "2013": 2093,
+            "2014": 2079,
+            "2015": 1961,
+            "2016": 1948,
+            "2017": 1982,
+            "2018": 2115,
+            "2019": 2133,
+            "2020": 2211,
+            "2021": 2273,
+            "2022": 2416,
+            "2023": 2502,
+            "2024": 2644,
+            "2025": 2656
+        },
+        "medio_total": {
+            "2008": 467,
+            "2009": 432,
+            "2010": 433,
+            "2011": 520,
+            "2012": 485,
+            "2013": 506,
+            "2014": 516,
+            "2015": 540,
+            "2016": 534,
+            "2017": 363,
+            "2018": 345,
+            "2019": 420,
+            "2020": 547,
+            "2021": 605,
+            "2022": 557,
+            "2023": 634,
+            "2024": 709,
+            "2025": 747
+        },
+        "fundamental_1o_ano": {
+            "2008": 213,
+            "2009": 231,
+            "2010": 245,
+            "2011": 175,
+            "2012": 221,
+            "2013": 183,
+            "2014": 228,
+            "2015": 197,
+            "2016": 184,
+            "2017": 193,
+            "2018": 228,
+            "2019": 209,
+            "2020": 267,
+            "2021": 0,
+            "2022": 268,
+            "2023": 260,
+            "2024": 264,
+            "2025": 306
+        },
+        "fundamental_2o_ano": {
+            "2008": 253,
+            "2009": 226,
+            "2010": 247,
+            "2011": 257,
+            "2012": 190,
+            "2013": 208,
+            "2014": 205,
+            "2015": 218,
+            "2016": 206,
+            "2017": 207,
+            "2018": 209,
+            "2019": 231,
+            "2020": 200,
+            "2021": 0,
+            "2022": 271,
+            "2023": 282,
+            "2024": 293,
+            "2025": 274
+        },
+        "fundamental_3o_ano": {
+            "2008": 271,
+            "2009": 243,
+            "2010": 220,
+            "2011": 225,
+            "2012": 302,
+            "2013": 207,
+            "2014": 215,
+            "2015": 183,
+            "2016": 214,
+            "2017": 224,
+            "2018": 230,
+            "2019": 230,
+            "2020": 242,
+            "2021": 0,
+            "2022": 239,
+            "2023": 282,
+            "2024": 290,
+            "2025": 266
+        },
+        "fundamental_4o_ano": {
+            "2008": 300,
+            "2009": 243,
+            "2010": 248,
+            "2011": 215,
+            "2012": 248,
+            "2013": 328,
+            "2014": 231,
+            "2015": 232,
+            "2016": 207,
+            "2017": 248,
+            "2018": 248,
+            "2019": 254,
+            "2020": 228,
+            "2021": 0,
+            "2022": 226,
+            "2023": 248,
+            "2024": 303,
+            "2025": 296
+        },
+        "fundamental_5o_ano": {
+            "2008": 259,
+            "2009": 293,
+            "2010": 238,
+            "2011": 241,
+            "2012": 204,
+            "2013": 228,
+            "2014": 294,
+            "2015": 202,
+            "2016": 225,
+            "2017": 213,
+            "2018": 267,
+            "2019": 243,
+            "2020": 245,
+            "2021": 0,
+            "2022": 263,
+            "2023": 233,
+            "2024": 273,
+            "2025": 297
+        },
+        "fundamental_6o_ano": {
+            "2008": 267,
+            "2009": 296,
+            "2010": 308,
+            "2011": 246,
+            "2012": 277,
+            "2013": 204,
+            "2014": 240,
+            "2015": 269,
+            "2016": 226,
+            "2017": 239,
+            "2018": 224,
+            "2019": 282,
+            "2020": 259,
+            "2021": 0,
+            "2022": 273,
+            "2023": 306,
+            "2024": 275,
+            "2025": 307
+        },
+        "fundamental_7o_ano": {
+            "2008": 324,
+            "2009": 285,
+            "2010": 299,
+            "2011": 278,
+            "2012": 261,
+            "2013": 267,
+            "2014": 209,
+            "2015": 234,
+            "2016": 263,
+            "2017": 204,
+            "2018": 248,
+            "2019": 236,
+            "2020": 283,
+            "2021": 0,
+            "2022": 311,
+            "2023": 275,
+            "2024": 320,
+            "2025": 309
+        },
+        "fundamental_8o_ano": {
+            "2008": 223,
+            "2009": 297,
+            "2010": 239,
+            "2011": 271,
+            "2012": 275,
+            "2013": 241,
+            "2014": 246,
+            "2015": 206,
+            "2016": 229,
+            "2017": 241,
+            "2018": 234,
+            "2019": 244,
+            "2020": 244,
+            "2021": 0,
+            "2022": 272,
+            "2023": 336,
+            "2024": 281,
+            "2025": 328
+        },
+        "fundamental_9o_ano": {
+            "2008": 217,
+            "2009": 186,
+            "2010": 276,
+            "2011": 202,
+            "2012": 249,
+            "2013": 227,
+            "2014": 211,
+            "2015": 220,
+            "2016": 194,
+            "2017": 213,
+            "2018": 227,
+            "2019": 204,
+            "2020": 243,
+            "2021": 0,
+            "2022": 293,
+            "2023": 280,
+            "2024": 345,
+            "2025": 273
+        },
+        "fundamental_1o_ano_municipal": {
+            "2008": 202,
+            "2009": 219,
+            "2010": 193,
+            "2011": 158,
+            "2012": 158,
+            "2013": 167,
+            "2014": 188,
+            "2015": 176,
+            "2016": 166,
+            "2017": 162,
+            "2018": 200,
+            "2019": 202,
+            "2020": 241,
+            "2021": 241,
+            "2022": 252,
+            "2023": 242,
+            "2024": 257,
+            "2025": 306
+        },
+        "fundamental_1o_ano_estadual": {
+            "2008": 0,
+            "2009": 0,
+            "2010": 22,
+            "2011": 15,
+            "2012": 47,
+            "2013": 16,
+            "2014": 23,
+            "2015": 21,
+            "2016": 18,
+            "2017": 31,
+            "2018": 23,
+            "2019": 0,
+            "2020": 0,
+            "2021": 0,
+            "2022": 0,
+            "2023": 0,
+            "2024": 0,
+            "2025": 0
+        },
+        "fundamental_1o_ano_privado": {
+            "2008": 11,
+            "2009": 12,
+            "2010": 30,
+            "2011": 2,
+            "2012": 16,
+            "2013": 0,
+            "2014": 17,
+            "2015": 0,
+            "2016": 0,
+            "2017": 0,
+            "2018": 5,
+            "2019": 7,
+            "2020": 26,
+            "2021": 14,
+            "2022": 16,
+            "2023": 18,
+            "2024": 7,
+            "2025": 0
+        }
+    },
+    "matriculas_2025": {
+        "fundamental_total": 2656,
+        "fundamental_1o_5o": 1439,
+        "fundamental_6o_9o": 1217,
+        "medio_total": 747,
+        "fundamental_1o_ano": 306,
+        "dependencia_1o_ano": {
+            "municipal": 306,
+            "estadual": 0,
+            "privado": 0
+        },
+        "creche_referencia": 289,
+        "pre_escola_referencia": 514
+    },
+    "transicao_pre_escola_fundamental": {
+        "populacao_5_anos_censo_2022": 275,
+        "matriculas_1o_ano_fundamental_2025": 306,
+        "taxa_transicao_pct": 111.27,
+        "observacao": "Relação entre as crianças de 5 anos (Censo 2022) e as matrículas no 1º ano do Ensino Fundamental (Censo Escolar 2025) – acima de 100% indica absorção também de crianças de outras idades ou entrada antecipada."
+    },
+    "contraturno_tempo_integral": {
+        "criancas_adolescentes_6a14": 2669,
+        "jovens_15a17": 817,
+        "oferta_tempo_integral_publica": "Sem indicador específico de matrícula em tempo integral para o município na API IBGE Pesquisa 13 (Censo Escolar)",
+        "demanda_estimada_contraturno": 2669,
+        "observacao": "Grande parte das matrículas de Guapó ocorre em regime de meio período. O auditório multiuso da nova escola é planejado como polo de reforço escolar, oficinas de artes, robótica, música e esporte no contraturno para crianças e adolescentes de 6 a 14 anos, ampliando o impacto social do investimento público."
+    }
+}

@@ -34,6 +34,7 @@ final class GuapoDataSyncServiceTest extends TestCase
             new Response(200, [], json_encode($this->censoFixture(), JSON_UNESCAPED_UNICODE)),
             new Response(200, [], json_encode($this->crecheFixture())),
             new Response(200, [], json_encode($this->preEscolaFixture())),
+            new Response(200, [], json_encode($this->fund1AnoFixture())),
         ]);
 
         $client = new Client(['handler' => HandlerStack::create($mock)]);
@@ -42,15 +43,23 @@ final class GuapoDataSyncServiceTest extends TestCase
 
         $payload = $service->sync();
 
-        $this->assertCount(6, $payload->piramideEtaria);
+        $this->assertCount(18, $payload->piramideEtaria);
         $this->assertSame(1068, $payload->resumoExecutivo['populacao_0a3_anos']);
         $this->assertSame(553, $payload->resumoExecutivo['populacao_4a5_anos']);
         $this->assertSame(289, $payload->resumoExecutivo['vagas_creche_atual_2025']);
         $this->assertSame(514, $payload->resumoExecutivo['vagas_pre_escola_atual_2025']);
+        $this->assertSame(1482, $payload->resumoExecutivo['populacao_fundamental_1_6a10']);
+        $this->assertSame(1187, $payload->resumoExecutivo['populacao_fundamental_2_11a14']);
+        $this->assertSame(817, $payload->resumoExecutivo['populacao_medio_15a17']);
+        $this->assertSame(5107, $payload->resumoExecutivo['populacao_total_escolar_0a17']);
+        $this->assertSame(306, $payload->resumoExecutivo['matriculas_1ano_fundamental_2025']);
 
         // Primeira faixa etária (0 anos)
         $this->assertSame('Menos de 1 ano', $payload->piramideEtaria[0]['idade']);
         $this->assertSame(265, $payload->piramideEtaria[0]['populacao']);
+        // Última faixa etária (17 anos)
+        $this->assertSame('17 anos', $payload->piramideEtaria[17]['idade']);
+        $this->assertSame(256, $payload->piramideEtaria[17]['populacao']);
     }
 
     public function testCalculosMatematicosDeficitEMetaPne(): void
@@ -60,7 +69,8 @@ final class GuapoDataSyncServiceTest extends TestCase
         $resumo = $service->calcularResumo(
             $this->censoParsed(),
             ['2025' => 289],
-            ['2025' => 514]
+            ['2025' => 514],
+            ['2025' => 306]
         );
 
         $this->assertSame(779, $resumo['deficit_vagas_creche']);
@@ -68,6 +78,14 @@ final class GuapoDataSyncServiceTest extends TestCase
         $this->assertSame(534, $resumo['meta_pne_minima_50pct']);
         $this->assertSame(245, $resumo['vagas_faltantes_para_pne']);
         $this->assertSame(92.95, $resumo['taxa_cobertura_pre_escola_pct']);
+
+        // Agregados demográficos 0-17 anos (Sub-issue 1.4)
+        $this->assertSame(1482, $resumo['populacao_fundamental_1_6a10']);
+        $this->assertSame(1187, $resumo['populacao_fundamental_2_11a14']);
+        $this->assertSame(817, $resumo['populacao_medio_15a17']);
+        $this->assertSame(5107, $resumo['populacao_total_escolar_0a17']);
+        $this->assertSame(306, $resumo['matriculas_1ano_fundamental_2025']);
+        $this->assertSame(111.27, $resumo['taxa_transicao_pre_fundamental_pct']);
     }
 
     public function testApiFalhaUsaCacheFallback(): void
@@ -77,6 +95,7 @@ final class GuapoDataSyncServiceTest extends TestCase
             new Response(200, [], json_encode($this->censoFixture(), JSON_UNESCAPED_UNICODE)),
             new Response(200, [], json_encode($this->crecheFixture())),
             new Response(200, [], json_encode($this->preEscolaFixture())),
+            new Response(200, [], json_encode($this->fund1AnoFixture())),
         ]);
         $apiOk = new IbgeApiClient(
             new Client(['handler' => HandlerStack::create($mockOk)]),
@@ -86,6 +105,7 @@ final class GuapoDataSyncServiceTest extends TestCase
 
         // Agora simula falha: HTTP 500 em todos os endpoints.
         $mockFail = new MockHandler([
+            new Response(500, [], 'erro'),
             new Response(500, [], 'erro'),
             new Response(500, [], 'erro'),
             new Response(500, [], 'erro'),
@@ -147,6 +167,18 @@ final class GuapoDataSyncServiceTest extends TestCase
             '6560' => ['3 anos', 311],
             '6561' => ['4 anos', 278],
             '6562' => ['5 anos', 275],
+            '6563' => ['6 anos', 295],
+            '6564' => ['7 anos', 298],
+            '6565' => ['8 anos', 308],
+            '6566' => ['9 anos', 289],
+            '6567' => ['10 anos', 292],
+            '6568' => ['11 anos', 278],
+            '6569' => ['12 anos', 320],
+            '6570' => ['13 anos', 312],
+            '6571' => ['14 anos', 277],
+            '6572' => ['15 anos', 288],
+            '6573' => ['16 anos', 273],
+            '6574' => ['17 anos', 256],
         ];
 
         $resultados = [];
@@ -210,6 +242,34 @@ final class GuapoDataSyncServiceTest extends TestCase
         ]];
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function fund1AnoFixture(): array
+    {
+        $res = [];
+        foreach (range(2008, 2025) as $ano) {
+            $res[(string) $ano] = (string) $this->fund1AnoPorAno($ano);
+        }
+
+        return [[
+            'id' => 77899,
+            'res' => [
+                ['localidade' => '520920', 'res' => $res, 'notas' => []],
+            ],
+        ]];
+    }
+
+    private function fund1AnoPorAno(int $ano): int
+    {
+        return [
+            2008 => 213, 2009 => 233, 2010 => 250, 2011 => 264, 2012 => 240,
+            2013 => 260, 2014 => 268, 2015 => 290, 2016 => 282, 2017 => 285,
+            2018 => 300, 2019 => 291, 2020 => 288, 2021 => 274, 2022 => 295,
+            2023 => 301, 2024 => 308, 2025 => 306,
+        ][$ano] ?? 0;
+    }
+
     private function crechePorAno(int $ano): int
     {
         return [
@@ -242,6 +302,18 @@ final class GuapoDataSyncServiceTest extends TestCase
             ['idade' => '3 anos', 'populacao' => 311],
             ['idade' => '4 anos', 'populacao' => 278],
             ['idade' => '5 anos', 'populacao' => 275],
+            ['idade' => '6 anos', 'populacao' => 295],
+            ['idade' => '7 anos', 'populacao' => 298],
+            ['idade' => '8 anos', 'populacao' => 308],
+            ['idade' => '9 anos', 'populacao' => 289],
+            ['idade' => '10 anos', 'populacao' => 292],
+            ['idade' => '11 anos', 'populacao' => 278],
+            ['idade' => '12 anos', 'populacao' => 320],
+            ['idade' => '13 anos', 'populacao' => 312],
+            ['idade' => '14 anos', 'populacao' => 277],
+            ['idade' => '15 anos', 'populacao' => 288],
+            ['idade' => '16 anos', 'populacao' => 273],
+            ['idade' => '17 anos', 'populacao' => 256],
         ];
     }
 }

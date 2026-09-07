@@ -13,11 +13,11 @@ Cliente HTTP (Guzzle)
 IbgeApiClient ──► Cache em disco (storage/cache/)
       │
       ▼
-GuapoDataSyncService  ──► 3 endpoints oficiais
+GuapoDataSyncService  ──► 4 endpoints oficiais
       │
-      ├─ parseCenso2022()       (Tabela 9514 / API v3)
+      ├─ parseCenso2022()       (Tabela 9514 / API v3 - 0 a 17 anos)
       ├─ parseSeriePesquisa13() (INEP - Pesquisa 13)
-      ├─ calcularResumo()       (déficit, cobertura, PNE)
+      ├─ calcularResumo()       (déficit, cobertura, PNE, agregação 0-17, transição)
       ▼
 EducationDashboardPayload
       │
@@ -29,9 +29,10 @@ storage/data/guapo_education_cache.json
 
 | # | Finalidade | Endpoint |
 |---|---|---|
-| 1 | Censo 2022 - Pirâmide Etária 0-5 anos (Tab. 9514) | `https://servicodados.ibge.gov.br/api/v3/agregados/9514/periodos/2022/variaveis/93?localidades=N6[5209200]&classificacao=2[6794]|287[6557,6558,6559,6560,6561,6562]` |
+| 1 | Censo 2022 - Pirâmide Etária 0-17 anos (Tab. 9514) | `https://servicodados.ibge.gov.br/api/v3/agregados/9514/periodos/2022/variaveis/93?localidades=N6[5209200]&classificacao=2[6794]|287[6557,...,6574]` |
 | 2 | Matrículas em Creche Municipal (Pesquisa 13 - 77883) | `https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/77883/resultados/5209200` |
 | 3 | Matrículas em Pré-escola Municipal (Pesquisa 13 - 5904) | `https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/5904/resultados/5209200` |
+| 4 | Matrículas no 1º ano do EF (Pesquisa 13 - 77899) | `https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/77899/resultados/5209200` |
 
 ## Componentes
 
@@ -46,17 +47,20 @@ storage/data/guapo_education_cache.json
 
 Orquestrador responsável por:
 
-1. Disparar as 3 requisições (sequenciais nesta versão; prontas para evoluir para Guzzle Pool/Promises).
+1. Disparar as 4 requisições (sequenciais nesta versão; prontas para evoluir para Guzzle Pool/Promises).
 2. Fazer o parsing das respostas:
-   - **Censo 2022 (9514):** categorias `6557–6560` → creche; `6561–6562` → pré-escola.
+   - **Censo 2022 (9514):** categorias `6557–6560` → creche; `6561–6562` → pré-escola; `6563–6567` → Fundamental I (6-10 anos); `6568–6571` → Fundamental II (11-14 anos); `6572–6574` → Ensino Médio (15-17 anos). Total 0-17 = 5.107.
    - **Censo Escolar (77883):** série histórica e matrícula de 2025 (289).
    - **Censo Escolar (5904):** série histórica e matrícula de 2025 (514).
+   - **Censo Escolar (77899):** matrículas no 1º ano do EF (2025 = 306) para a taxa de transição.
 3. Calcular indicadores:
    - Déficit absoluto de creche: `1.068 − 289 = 779`.
    - Taxa de desatendimento: `779 / 1.068 = 72,94%`.
    - Meta 1 PNE: `1.068 × 0,50 = 534 vagas`.
    - Gap legal: `534 − 289 = 245 vagas adicionais`.
    - Cobertura pré-escola: `514 / 553 = 92,95%`.
+   - População Fundamental I/II e Médio: `1.482 / 1.187 / 817`; total 0-17 = `5.107`.
+   - Transição pré-escola → 1º ano EF: `306 / 275 = 111,27%` (sem evasão estrutural no fluxo).
 4. Persistir o payload em `storage/data/guapo_education_cache.json`.
 
 ### EducationDashboardPayload

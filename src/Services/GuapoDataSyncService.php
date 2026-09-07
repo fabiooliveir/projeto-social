@@ -12,12 +12,16 @@ use App\Models\EducationDashboardPayload;
  */
 final class GuapoDataSyncService
 {
-    public const URL_CENSO_2022 = 'https://servicodados.ibge.gov.br/api/v3/agregados/9514/periodos/2022/variaveis/93?localidades=N6[5209200]&classificacao=2[6794]|287[6557,6558,6559,6560,6561,6562]';
+    public const URL_CENSO_2022 = 'https://servicodados.ibge.gov.br/api/v3/agregados/9514/periodos/2022/variaveis/93?localidades=N6[5209200]&classificacao=2[6794]|287[6557,6558,6559,6560,6561,6562,6563,6564,6565,6566,6567,6568,6569,6570,6571,6572,6573,6574]';
     public const URL_CRECHE_MUNICIPAL = 'https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/77883/resultados/5209200';
     public const URL_PRE_ESCOLA_MUNICIPAL = 'https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/5904/resultados/5209200';
+    public const URL_1_ANO_FUNDAMENTAL = 'https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/77899/resultados/5209200';
 
     private const CATEGORIA_CRECHE = [6557, 6558, 6559, 6560];
     private const CATEGORIA_PRE_ESCOLA = [6561, 6562];
+    private const CATEGORIA_FUNDAMENTAL_1 = [6563, 6564, 6565, 6566, 6567];
+    private const CATEGORIA_FUNDAMENTAL_2 = [6568, 6569, 6570, 6571];
+    private const CATEGORIA_MEDIO = [6572, 6573, 6574];
 
     private const ROTULO_IDADE = [
         6557 => 'Menos de 1 ano',
@@ -26,6 +30,18 @@ final class GuapoDataSyncService
         6560 => '3 anos',
         6561 => '4 anos',
         6562 => '5 anos',
+        6563 => '6 anos',
+        6564 => '7 anos',
+        6565 => '8 anos',
+        6566 => '9 anos',
+        6567 => '10 anos',
+        6568 => '11 anos',
+        6569 => '12 anos',
+        6570 => '13 anos',
+        6571 => '14 anos',
+        6572 => '15 anos',
+        6573 => '16 anos',
+        6574 => '17 anos',
     ];
 
     private const ANO_MATRICULA_ATUAL = 2025;
@@ -55,11 +71,16 @@ final class GuapoDataSyncService
         $preEscola = $this->client->fetchJson(self::URL_PRE_ESCOLA_MUNICIPAL, 'pre_escola_municipal');
         $this->logOk();
 
-        $this->log('[CALC] Processando déficit e metas do PNE...', 'server');
+        $this->log('[INEP] Coletando Censo Escolar (1º ano Ensino Fundamental - 77899)...', 'server');
+        $fund1Ano = $this->client->fetchJson(self::URL_1_ANO_FUNDAMENTAL, 'fundamental_1_ano');
+        $this->logOk();
+
+        $this->log('[CALC] Processando déficit, metas do PNE e transição...', 'server');
         $piramide = $this->parseCenso2022($censo);
         $crecheSerie = $this->parseSeriePesquisa13($creche);
         $preEscolaSerie = $this->parseSeriePesquisa13($preEscola);
-        $resumo = $this->calcularResumo($piramide, $crecheSerie, $preEscolaSerie);
+        $fund1AnoSerie = $this->parseSeriePesquisa13($fund1Ano);
+        $resumo = $this->calcularResumo($piramide, $crecheSerie, $preEscolaSerie, $fund1AnoSerie);
         $this->logOk();
 
         $payload = new EducationDashboardPayload(
@@ -71,6 +92,7 @@ final class GuapoDataSyncService
             seriesHistoricas: [
                 'creche_municipal'    => array_filter($crecheSerie, fn ($ano) => in_array($ano, [2008, 2013, 2018, 2022, 2025], true), ARRAY_FILTER_USE_KEY),
                 'pre_escola_municipal' => array_filter($preEscolaSerie, fn ($ano) => in_array($ano, [2008, 2015, 2022, 2025], true), ARRAY_FILTER_USE_KEY),
+                'fundamental_1_ano'    => array_filter($fund1AnoSerie, fn ($ano) => in_array($ano, [2008, 2013, 2018, 2022, 2025], true), ARRAY_FILTER_USE_KEY),
             ],
         );
 
@@ -148,31 +170,55 @@ final class GuapoDataSyncService
     }
 
     /**
-     * Calcula os indicadores de déficit e cobertura.
+     * Calcula os indicadores de déficit, cobertura e transição 0-17 anos.
      *
+     * @param array<int, array{idade: string, populacao: int}> $piramide
+     * @param array<string, int> $crecheSerie
+     * @param array<string, int> $preEscolaSerie
+     * @param array<string, int> $fund1AnoSerie
      * @return array<string, int|float>
      */
-    public function calcularResumo(array $piramide, array $crecheSerie, array $preEscolaSerie): array
+    public function calcularResumo(array $piramide, array $crecheSerie, array $preEscolaSerie, array $fund1AnoSerie = []): array
     {
         $popCreche = 0;
         $popPreEscola = 0;
+        $popFund1 = 0;
+        $popFund2 = 0;
+        $popMedio = 0;
+        $popTotal = 0;
+        $pop5Anos = 0;
+
         foreach ($piramide as $e) {
             $codigo = $this->codigoDoRotulo($e['idade']);
+            $popTotal += $e['populacao'];
+
             if (in_array($codigo, self::CATEGORIA_CRECHE, true)) {
                 $popCreche += $e['populacao'];
             } elseif (in_array($codigo, self::CATEGORIA_PRE_ESCOLA, true)) {
                 $popPreEscola += $e['populacao'];
+            } elseif (in_array($codigo, self::CATEGORIA_FUNDAMENTAL_1, true)) {
+                $popFund1 += $e['populacao'];
+            } elseif (in_array($codigo, self::CATEGORIA_FUNDAMENTAL_2, true)) {
+                $popFund2 += $e['populacao'];
+            } elseif (in_array($codigo, self::CATEGORIA_MEDIO, true)) {
+                $popMedio += $e['populacao'];
+            }
+
+            if ($codigo === 6562) {
+                $pop5Anos = $e['populacao'];
             }
         }
 
         $vagasCreche = $crecheSerie[(string) self::ANO_MATRICULA_ATUAL] ?? 0;
         $vagasPreEscola = $preEscolaSerie[(string) self::ANO_MATRICULA_ATUAL] ?? 0;
+        $matriculas1AnoFund = $fund1AnoSerie[(string) self::ANO_MATRICULA_ATUAL] ?? 0;
 
         $deficit = $popCreche - $vagasCreche;
         $taxaDesatendimento = $popCreche > 0 ? round($deficit / $popCreche * 100, 2) : 0.0;
         $metaPne = (int) round($popCreche * 0.50);
         $gapPne = $metaPne - $vagasCreche;
         $coberturaPreEscola = $popPreEscola > 0 ? round($vagasPreEscola / $popPreEscola * 100, 2) : 0.0;
+        $taxaTransicao = $pop5Anos > 0 ? round($matriculas1AnoFund / $pop5Anos * 100, 2) : 0.0;
 
         return [
             'populacao_0a3_anos'               => $popCreche,
@@ -184,6 +230,12 @@ final class GuapoDataSyncService
             'populacao_4a5_anos'               => $popPreEscola,
             'vagas_pre_escola_atual_2025'      => $vagasPreEscola,
             'taxa_cobertura_pre_escola_pct'    => $coberturaPreEscola,
+            'populacao_fundamental_1_6a10'     => $popFund1,
+            'populacao_fundamental_2_11a14'    => $popFund2,
+            'populacao_medio_15a17'            => $popMedio,
+            'populacao_total_escolar_0a17'     => $popTotal,
+            'matriculas_1ano_fundamental_2025' => $matriculas1AnoFund,
+            'taxa_transicao_pre_fundamental_pct' => $taxaTransicao,
         ];
     }
 
