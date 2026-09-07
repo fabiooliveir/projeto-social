@@ -1,0 +1,249 @@
+{
+    "metadata": {
+        "fonte": "INEP - Censo Escolar / IBGE - Pesquisa 13",
+        "municipio": "Guapó (GO)",
+        "codigo_ibge": "5209200",
+        "periodo": "2008-2025",
+        "data_extracao": "2026-09-06T22:37:24-0300",
+        "api": "https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores",
+        "indicadores_uso": {
+            "matriculas_creche_municipal": 77883,
+            "matriculas_creche_privada": 77886,
+            "matriculas_pre_escola_municipal": 5904,
+            "matriculas_pre_escola_privada": 5907,
+            "escolas_creche_municipal": 77895,
+            "escolas_pre_escola_municipal": 5946
+        }
+    },
+    "serie_anual": [
+        {
+            "ano": 2008,
+            "creche_municipal": 121,
+            "creche_privada": 0,
+            "creche_total": 121,
+            "pre_escola_municipal": 184,
+            "pre_escola_privada": 29,
+            "pre_escola_total": 213,
+            "escolas_creche_municipal": 1,
+            "escolas_pre_escola_municipal": 3
+        },
+        {
+            "ano": 2009,
+            "creche_municipal": 70,
+            "creche_privada": 0,
+            "creche_total": 70,
+            "pre_escola_municipal": 205,
+            "pre_escola_privada": 10,
+            "pre_escola_total": 215,
+            "escolas_creche_municipal": 1,
+            "escolas_pre_escola_municipal": 3
+        },
+        {
+            "ano": 2010,
+            "creche_municipal": 15,
+            "creche_privada": 0,
+            "creche_total": 15,
+            "pre_escola_municipal": 266,
+            "pre_escola_privada": 37,
+            "pre_escola_total": 303,
+            "escolas_creche_municipal": 1,
+            "escolas_pre_escola_municipal": 4
+        },
+        {
+            "ano": 2011,
+            "creche_municipal": 0,
+            "creche_privada": 0,
+            "creche_total": 0,
+            "pre_escola_municipal": 264,
+            "pre_escola_privada": 1,
+            "pre_escola_total": 265,
+            "escolas_creche_municipal": 0,
+            "escolas_pre_escola_municipal": 3
+        },
+        {
+            "ano": 2012,
+            "creche_municipal": 0,
+            "creche_privada": 0,
+            "creche_total": 0,
+            "pre_escola_municipal": 359,
+            "pre_escola_privada": 31,
+            "pre_escola_total": 390,
+            "escolas_creche_municipal": 0,
+            "escolas_pre_escola_municipal": 2
+        },
+        {
+            "ano": 2013,
+            "creche_municipal": 61,
+            "creche_privada": 8,
+            "creche_total": 69,
+            "pre_escola_municipal": 444,
+            "pre_escola_privada": 24,
+            "pre_escola_total": 468,
+            "escolas_creche_municipal": 1,
+            "escolas_pre_escola_municipal": 3
+        },
+        {
+            "ano": 2014,
+            "creche_municipal": 89,
+            "creche_privada": 5,
+            "creche_total": 94,
+            "pre_escola_municipal": 477,
+            "pre_escola_privada": 8,
+            "pre_escola_total": 485,
+            "escolas_creche_municipal": 1,
+            "escolas_pre_escola_municipal": 3
+        },
+        {
+            "ano": 2015,
+            "creche_municipal": 96,
+            "creche_privada": 0,
+            "creche_total": 96,
+            "pre_escola_municipal": 480,
+            "pre_escola_privada": 0,
+            "pre_escola_total": 480,
+            "escolas_creche_municipal": 1,
+            "escolas_pre_escola_municipal": 4
+        },
+        {
+            "ano": 2016,
+            "creche_municipal": 128,
+            "creche_privada": 0,
+            "creche_total": 128,
+            "pre_escola_municipal": 465,
+            "pre_escola_privada": 0,
+            "pre_escola_total": 465,
+            "escolas_creche_municipal": 2,
+            "escolas_pre_escola_municipal": 4
+        },
+        {
+            "ano": 2017,
+            "creche_municipal": 132,
+            "creche_privada": 0,
+            "creche_total": 132,
+            "pre_escola_municipal": 494,
+            "pre_escola_privada": 0,
+            "pre_escola_total": 494,
+            "escolas_creche_municipal": 2,
+            "escolas_pre_escola_municipal": 4
+        },
+        {
+            "ano": 2018,
+            "creche_municipal": 249,
+            "creche_privada": 6,
+            "creche_total": 255,
+            "pre_escola_municipal": 408,
+            "pre_escola_privada": 10,
+            "pre_escola_total": 418,
+            "escolas_creche_municipal": 2,
+            "escolas_pre_escola_municipal": 4
+        },
+        {
+            "ano": 2019,
+            "creche_municipal": 220,
+            "creche_privada": 0,
+            "creche_total": 220,
+            "pre_escola_municipal": 456,
+            "pre_escola_privada": 14,
+            "pre_escola_total": 470,
+            "escolas_creche_municipal": 3,
+            "escolas_pre_escola_municipal": 3
+        },
+        {
+            "ano": 2020,
+            "creche_municipal": 229,
+            "creche_privada": 4,
+            "creche_total": 233,
+            "pre_escola_municipal": 456,
+            "pre_escola_privada": 18,
+            "pre_escola_total": 474,
+            "escolas_creche_municipal": 4,
+            "escolas_pre_escola_municipal": 4
+        },
+        {
+            "ano": 2021,
+            "creche_municipal": 177,
+            "creche_privada": 0,
+            "creche_total": 177,
+            "pre_escola_municipal": 420,
+            "pre_escola_privada": 8,
+            "pre_escola_total": 428,
+            "escolas_creche_municipal": 3,
+            "escolas_pre_escola_municipal": 4
+        },
+        {
+            "ano": 2022,
+            "creche_municipal": 237,
+            "creche_privada": 3,
+            "creche_total": 240,
+            "pre_escola_municipal": 437,
+            "pre_escola_privada": 22,
+            "pre_escola_total": 459,
+            "escolas_creche_municipal": 5,
+            "escolas_pre_escola_municipal": 4
+        },
+        {
+            "ano": 2023,
+            "creche_municipal": 281,
+            "creche_privada": 1,
+            "creche_total": 282,
+            "pre_escola_municipal": 481,
+            "pre_escola_privada": 14,
+            "pre_escola_total": 495,
+            "escolas_creche_municipal": 5,
+            "escolas_pre_escola_municipal": 6
+        },
+        {
+            "ano": 2024,
+            "creche_municipal": 255,
+            "creche_privada": 5,
+            "creche_total": 260,
+            "pre_escola_municipal": 521,
+            "pre_escola_privada": 25,
+            "pre_escola_total": 546,
+            "escolas_creche_municipal": 5,
+            "escolas_pre_escola_municipal": 7
+        },
+        {
+            "ano": 2025,
+            "creche_municipal": 289,
+            "creche_privada": 0,
+            "creche_total": 289,
+            "pre_escola_municipal": 514,
+            "pre_escola_privada": 0,
+            "pre_escola_total": 514,
+            "escolas_creche_municipal": 6,
+            "escolas_pre_escola_municipal": 8
+        }
+    ],
+    "escolas_mapeadas": [
+        {
+            "nome": "CMEI Geralda Rodrigues Novantino",
+            "descricao": "Centro Municipal de Educação Infantil",
+            "etapas": [
+                "Creche",
+                "Pré-escola"
+            ]
+        },
+        {
+            "nome": "CMEI Floripes Maria de Jesus",
+            "descricao": "Centro Municipal de Educação Infantil",
+            "etapas": [
+                "Creche",
+                "Pré-escola"
+            ]
+        }
+    ],
+    "diagnostico_deficit_2025": {
+        "ano_referencia": 2025,
+        "populacao_creche_0a3": 1068,
+        "populacao_pre_escola_4a5": 553,
+        "vagas_creche_publicas": 289,
+        "deficit_absoluto_creche": 779,
+        "taxa_desassistencia": 72.94,
+        "meta_pne_1_minimo_vagas": 534,
+        "deficit_legal_meta_1": 245,
+        "cobertura_pre_escola_pct": 92.9,
+        "pre_escola_matriculas": 514,
+        "observacao": "Meta 1 do PNE (Lei 13.005/2014): ampliação do atendimento em creche para, no mínimo, 50% da população de 0 a 3 anos."
+    }
+}

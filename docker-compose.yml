@@ -1,0 +1,7 @@
+services:
+  app:
+    image: php:zts-alpine3.23
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: php scripts/consolidar_serie_historica.php
