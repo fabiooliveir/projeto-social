@@ -6,4 +6,9 @@ Thumbs.db
 node_modules/
 composer.lock
 storage/cache/
+storage/views/
 .phpunit.cache/
+.playwright-mcp/
+*.png
+*.jpg
+*.jpeg

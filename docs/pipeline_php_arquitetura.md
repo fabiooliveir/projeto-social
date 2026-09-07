@@ -83,10 +83,13 @@ Ponto de entrada CLI com cronômetro e saída formatada. Código de saída `0` e
 docker compose run --rm composer install
 
 # Executar o pipeline (coleta + cache)
-docker compose run --rm app
+docker compose run --rm app bin/sync_guapo_data.php
 
-# Rodar os testes unitários
+# Rodar os testes unitários e de integração
 docker compose run --rm tests
+
+# Subir o painel web (http://localhost:8000/painel-educacao)
+docker compose up -d app
 ```
 
 ## Tempo de Execução

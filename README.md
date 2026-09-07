@@ -10,7 +10,11 @@ projeto-social/
 ├── docs/metodologia/         # Notas técnicas e metodologia
 ├── data/raw/                 # Respostas brutas das APIs (IBGE, INEP)
 ├── data/processed/           # Dados tabulados e padronizados
-└── scripts/                  # Scripts de extração e processamento
+├── public/                   # Front controller (index.php) e .htaccess
+├── src/Controllers/          # Controllers HTTP (Dashboard)
+├── src/Views/                # Templates Blade (Tailwind CSS)
+├── scripts/                  # Scripts de extração e processamento
+└── storage/data/             # Cache consolidado do pipeline
 ```
 
 ## Fontes de Dados
@@ -20,10 +24,25 @@ projeto-social/
 | IBGE Censo 2022 | SIDRA / Agregados | Dados demográficos por idade |
 | INEP | Censo Escolar | Dados educacionais |
 
-## Uso
+## Uso (CLI)
 
 ```bash
 php scripts/extrair_piramide_etaria.php
+```
+
+## Painel Web (Dashboard)
+
+```bash
+docker compose up -d app
+```
+
+- Dashboard: http://localhost:8000/painel-educacao
+- API JSON:  http://localhost:8000/api/indicadores/guapo
+
+## Testes
+
+```bash
+docker compose run --rm tests
 ```
 
 ## Referências
