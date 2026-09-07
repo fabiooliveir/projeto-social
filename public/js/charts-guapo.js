@@ -9,18 +9,32 @@
         const script = document.getElementById('guapo-data');
         if (script && script.textContent.trim()) {
             try {
-                return Promise.resolve(JSON.parse(script.textContent));
+                const dados = JSON.parse(script.textContent);
+                return completarQualidade(dados);
             } catch (e) {
                 console.warn('[charts-guapo] Dados injetados inválidos. Usando a API como fallback.', e);
             }
         }
-        return fetch('/api/indicadores/guapo')
-            .then((r) => {
-                if (!r.ok) {
-                    throw new Error(`API respondeu HTTP ${r.status}`);
-                }
-                return r.json();
-            });
+        return Promise.all([
+            fetch('/api/indicadores/guapo')
+                .then((r) => {
+                    if (!r.ok) {
+                        throw new Error(`API respondeu HTTP ${r.status}`);
+                    }
+                    return r.json();
+                }),
+            fetch('/api/indicadores/qualidade')
+                .then((r) => (r.ok ? r.json() : null)),
+        ]).then(([edu, qualidade]) => (qualidade ? { ...edu, qualidade } : edu));
+    };
+
+    const completarQualidade = (dados) => {
+        if (dados.qualidade) {
+            return Promise.resolve(dados);
+        }
+        return fetch('/api/indicadores/qualidade')
+            .then((r) => (r.ok ? r.json() : null))
+            .then((qualidade) => (qualidade ? { ...dados, qualidade } : dados));
     };
 
     const construirEvolucao = (canvas, dados) => {
@@ -359,6 +373,210 @@
         });
     };
 
+    const construirIdeb = (canvas, dados) => {
+        const ideb = dados.qualidade && dados.qualidade.ideb;
+        if (!ideb) {
+            console.warn('[charts-guapo] Bloco qualidade.ideb ausente.');
+            return null;
+        }
+        const serieAI = ideb.anos_iniciais?.serie_historica || [];
+        const serieAF = ideb.anos_finais?.serie_historica || [];
+        const anos = [...new Set([...serieAI, ...serieAF].map((e) => String(e.ano)))].sort();
+        const extrair = (serie, campo) => anos.map((ano) => {
+            const ponto = serie.find((e) => String(e.ano) === ano);
+            return ponto ? ponto[campo] : null;
+        });
+        const linha = (rotulo, serie, campo, cor, tracejada = false) => ({
+            label: rotulo,
+            data: extrair(serie, campo),
+            borderColor: cor,
+            backgroundColor: cor,
+            fill: false,
+            tension: 0.4,
+            borderWidth: tracejada ? 2 : 3,
+            borderDash: tracejada ? [6, 6] : [],
+            pointRadius: tracejada ? 3 : 5,
+            pointBackgroundColor: cor,
+            pointBorderColor: '#fff',
+            spanGaps: true,
+        });
+
+        return new window.Chart(canvas, {
+            type: 'line',
+            data: {
+                labels: anos,
+                datasets: [
+                    linha('Nota Anos Iniciais (5º ano)', serieAI, 'nota', H.PALETA.azulRoyal),
+                    linha('Meta MEC Anos Iniciais', serieAI, 'meta', H.PALETA.azul, true),
+                    linha('Nota Anos Finais (9º ano)', serieAF, 'nota', H.PALETA.violeta),
+                    linha('Meta MEC Anos Finais', serieAF, 'meta', H.PALETA.eslate, true),
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: H.legendaPadrao,
+                    tooltip: {
+                        ...H.tooltipPadrao,
+                        callbacks: {
+                            title: (items) => `SAEB ${items[0]?.label ?? ''}`,
+                            label: (ctx) => ` ${ctx.dataset.label}: ${H.formatarDecimal(ctx.parsed.y)}`,
+                        },
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: 7,
+                        grid: { color: 'rgba(148,163,184,0.15)' },
+                        title: { display: true, text: 'IDEB (nota 0-10)', color: '#64748B' },
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { autoSkip: false },
+                    },
+                },
+            },
+        });
+    };
+
+    const construirDistorcao = (canvas, dados) => {
+        const qualidade = dados.qualidade;
+        const fluxo = qualidade && qualidade.fluxo_e_docencia;
+        const ideb = qualidade && qualidade.ideb;
+        if (!fluxo || !ideb) {
+            console.warn('[charts-guapo] Bloco qualidade.fluxo_e_docencia ausente.');
+            return null;
+        }
+        const tdiIniciais = Number(fluxo.distorcao_idade_serie_anos_iniciais_pct ?? 0);
+        const tdiFinais = Number(fluxo.distorcao_idade_serie_anos_finais_pct ?? 0);
+        const reprovIniciais = 100 - Number(ideb.anos_iniciais?.taxa_aprovacao_pct ?? 100);
+        const reprovFinais = 100 - Number(ideb.anos_finais?.taxa_aprovacao_pct ?? 100);
+
+        return new window.Chart(canvas, {
+            type: 'bar',
+            data: {
+                labels: ['Anos Iniciais (6 a 10)', 'Anos Finais (11 a 14)'],
+                datasets: [
+                    {
+                        label: 'Distorção idade-série (%)',
+                        data: [tdiIniciais, tdiFinais],
+                        backgroundColor: [H.rgbaDe(H.PALETA.ambar, 0.85), H.PALETA.vermelho],
+                        borderRadius: 8,
+                        barPercentage: 0.55,
+                    },
+                    {
+                        label: 'Reprovação anual (%)',
+                        data: [reprovIniciais, reprovFinais],
+                        backgroundColor: [H.rgbaDe(H.PALETA.eslate, 0.5), H.rgbaDe(H.PALETA.eslate, 0.85)],
+                        borderRadius: 8,
+                        barPercentage: 0.55,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: H.legendaPadrao,
+                    tooltip: {
+                        ...H.tooltipPadrao,
+                        callbacks: {
+                            label: (ctx) => ` ${ctx.dataset.label}: ${H.formatarDecimal(ctx.parsed.y)}%`,
+                        },
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(148,163,184,0.15)' },
+                        ticks: { callback: (v) => `${v}%` },
+                        title: { display: true, text: 'Percentual de estudantes', color: '#64748B' },
+                    },
+                    x: {
+                        grid: { display: false },
+                    },
+                },
+            },
+        });
+    };
+
+    const ITENS_INFRAESTRUTURA = {
+        com_refeitorio_alimentacao_pct: 'Refeitório com alimentação',
+        com_internet_banda_larga_pct: 'Internet banda larga',
+        com_biblioteca_sala_leitura_pct: 'Biblioteca / sala de leitura',
+        com_acessibilidade_pcd_pct: 'Acessibilidade para PcD',
+        com_parque_infantil_ludico_pct: 'Parque infantil / área lúdica',
+        com_bercario_lactario_creche_pct: 'Berçário / lactário',
+    };
+
+    const ITENS_CRITICOS = ['Berçário / lactário', 'Parque infantil / área lúdica'];
+
+    const construirInfraestrutura = (canvas, dados) => {
+        const infra = dados.qualidade && dados.qualidade.infraestrutura_resumo;
+        if (!infra) {
+            console.warn('[charts-guapo] Bloco qualidade.infraestrutura_resumo ausente.');
+            return null;
+        }
+        const itens = infra.itens || {};
+        const entradas = Object.entries(ITENS_INFRAESTRUTURA)
+            .map(([chave, rotulo]) => ({ rotulo, pct: Number(itens[chave] ?? 0) }))
+            .sort((a, b) => a.pct - b.pct);
+        const cores = entradas.map((e) => (ITENS_CRITICOS.includes(e.rotulo) ? H.PALETA.vermelho : H.PALETA.turquesa));
+
+        return new window.Chart(canvas, {
+            type: 'bar',
+            data: {
+                labels: entradas.map((e) => e.rotulo),
+                datasets: [{
+                    data: entradas.map((e) => e.pct),
+                    backgroundColor: cores,
+                    borderRadius: 6,
+                    barPercentage: 0.72,
+                    categoryPercentage: 0.8,
+                }],
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        ...H.tooltipPadrao,
+                        callbacks: {
+                            title: (items) => items[0]?.label ?? '',
+                            label: (ctx) => {
+                                const rotulo = ctx.label;
+                                const ehCritico = ITENS_CRITICOS.includes(rotulo);
+                                const unidades = Math.round((ctx.parsed.x / 100) * Number(infra.total_unidades_avaliadas ?? 0));
+                                const nota = ehCritico
+                                    ? ` Carência crítica: apenas ${H.formatarDecimal(ctx.parsed.x)}% das unidades (${unidades} de ${infra.total_unidades_avaliadas})`
+                                    : ` ${H.formatarDecimal(ctx.parsed.x)}% das unidades (${unidades} de ${infra.total_unidades_avaliadas})`;
+                                return nota;
+                            },
+                        },
+                    },
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: 'rgba(148,163,184,0.15)' },
+                        ticks: { callback: (v) => `${v}%` },
+                        title: { display: true, text: 'Unidades com o item (%)', color: '#64748B' },
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { font: { family: 'Inter, sans-serif', size: 12, weight: '600' } },
+                    },
+                },
+            },
+        });
+    };
+
     const instancias = new Map();
 
     const renderizar = (dados) => {
@@ -370,12 +588,18 @@
             ['chartDeficit', construirDeficit],
             ['chartMetaPNE', construirMetaPNE],
             ['chartPiramide', construirPiramide],
+            ['chartIdeb', construirIdeb],
+            ['chartDistorcaoFluxo', construirDistorcao],
+            ['chartInfraestrutura', construirInfraestrutura],
         ];
 
         alvos.forEach(([id, construtor]) => {
             const canvas = document.getElementById(id);
             if (canvas) {
-                instancias.set(id, construtor(canvas, dados));
+                const instancia = construtor(canvas, dados);
+                if (instancia) {
+                    instancias.set(id, instancia);
+                }
             }
         });
     };

@@ -32,6 +32,9 @@
             <button type="button" id="tab-ecossistema" role="tab" aria-controls="panel-ecossistema" aria-selected="false" data-tab-target="panel-ecossistema" class="tab-btn flex-1 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-bold transition">
                 Ecossistema Completo (0 a 17)
             </button>
+            <button type="button" id="tab-qualidade" role="tab" aria-controls="panel-qualidade" aria-selected="false" data-tab-target="panel-qualidade" class="tab-btn flex-1 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-bold transition">
+                Qualidade & IDEB (MEC / SAEB)
+            </button>
         </div>
 
         {{-- Grid de 5 KPIs --}}
@@ -199,6 +202,9 @@
             </div>
         </section>
 
+        {{-- Painel: Qualidade Educacional --}}
+        @include('dashboard.components.section-quality')
+
         {{-- Evolução histórica (visão compartilhada) --}}
         <div class="mt-10">
             <script type="application/json" id="guapo-data">
@@ -208,6 +214,7 @@
     'resumo_executivo' => $resumo_executivo,
     'piramide_etaria' => $piramide_etaria,
     'series_historicas' => $series_historicas,
+    'qualidade' => $qualidade ?? null,
 ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
             </script>
             @include('dashboard.components.chart-card', [

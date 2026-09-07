@@ -23,7 +23,10 @@
     };
 
     botoes.forEach((botao) => {
-        botao.addEventListener('click', () => alternar(botao.dataset.tabTarget));
+        botao.addEventListener('click', () => {
+            alternar(botao.dataset.tabTarget);
+            history.replaceState(null, '', `#${botao.id}`);
+        });
     });
 
     // Navegação por teclado (setas esquerda/direita) para acessibilidade.
@@ -42,4 +45,15 @@
             }
         });
     });
+// Persistência da aba ativa no histórico (hash) para navegação e compartilhamento.
+    const aplicarHash = () => {
+        const alvo = window.location.hash.replace('#', '');
+        const existe = botoes.some((botao) => botao.dataset.tabTarget === alvo);
+        if (existe) {
+            alternar(alvo);
+        }
+    };
+
+    window.addEventListener('hashchange', aplicarHash);
+    aplicarHash();
 })();

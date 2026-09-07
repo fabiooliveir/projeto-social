@@ -50,6 +50,32 @@ final class EducationDashboardTest extends TestCase
         $this->assertSame(534, $json['resumo_executivo']['meta_pne_minima_50pct']);
     }
 
+    public function testPainelRenderizaModuloQualidadeComIdeb(): void
+    {
+        [$status, $body] = $this->request('GET', '/painel-educacao');
+
+        $this->assertSame(200, $status);
+        $this->assertStringContainsString('Além das Vagas: O Desafio da Qualidade', $body);
+        $this->assertStringContainsString('Qualidade & IDEB (MEC / SAEB)', $body);
+        $this->assertStringContainsString('Auditório Multiuso', $body);
+        foreach (['6,0', '5,1', '16,4%', '74,5%', 'chartIdeb', 'chartDistorcaoFluxo', 'chartInfraestrutura'] as $trecho) {
+            $this->assertStringContainsString($trecho, $body);
+        }
+    }
+
+    public function testApiIndicadoresQualidadeRetornaIdebEInfraestrutura(): void
+    {
+        [$status, $body] = $this->request('GET', '/api/indicadores/qualidade');
+
+        $this->assertSame(200, $status);
+        $json = json_decode($body, true);
+        $this->assertIsArray($json);
+        $this->assertEquals(6.0, $json['ideb']['anos_iniciais']['nota_recente']);
+        $this->assertEquals(5.1, $json['ideb']['anos_finais']['nota_recente']);
+        $this->assertEquals(16.4, $json['fluxo_e_docencia']['distorcao_idade_serie_anos_finais_pct']);
+        $this->assertSame(12, $json['infraestrutura_resumo']['total_unidades_avaliadas']);
+    }
+
     public function testRotaInexistenteRetorna404(): void
     {
         [$status, $body] = $this->request('GET', '/rota/inexistente');

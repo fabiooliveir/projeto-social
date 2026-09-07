@@ -6,6 +6,7 @@ namespace App\Controllers;
 
 use App\Services\GuapoDataSyncService;
 use App\Services\IbgeApiClient;
+use App\Services\QualityIndicatorsService;
 use Jenssegers\Blade\Blade;
 
 /**
@@ -13,15 +14,25 @@ use Jenssegers\Blade\Blade;
  */
 final class EducationDashboardController
 {
+    private readonly QualityIndicatorsService $qualityService;
+
     public function __construct(
         private readonly Blade $blade,
         private readonly string $cacheFile = __DIR__ . '/../../storage/data/guapo_education_cache.json',
+        ?QualityIndicatorsService $qualityService = null,
     ) {
+        $this->qualityService = $qualityService ?? new QualityIndicatorsService();
     }
 
     public function index(): void
     {
         $payload = $this->payload();
+
+        try {
+            $qualidade = $this->qualityService->obterIndicadoresCompletos();
+        } catch (\RuntimeException) {
+            $qualidade = null;
+        }
 
         header('Content-Type: text/html; charset=utf-8');
 
@@ -31,6 +42,7 @@ final class EducationDashboardController
             'resumo_executivo'   => $payload['resumo_executivo'],
             'piramide_etaria'    => $payload['piramide_etaria'],
             'series_historicas'  => $payload['series_historicas'],
+            'qualidade'          => $qualidade,
         ]);
     }
 
