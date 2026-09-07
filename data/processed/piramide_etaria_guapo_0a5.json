@@ -1,0 +1,78 @@
+{
+    "metadata": {
+        "fonte": "IBGE - Censo Demográfico 2022",
+        "tabela": "9514 - População residente, por idade e sexo",
+        "municipio": "Guapó (GO)",
+        "codigo_ibge": "5209200",
+        "variavel": "População residente (V93)",
+        "data_extracao": "2026-09-06T22:29:06-0300",
+        "api_url": "https:\/\/apisidra.ibge.gov.br\/values\/t\/9514\/n6\/5209200\/v\/allxp\/p\/last%201\/c2\/6794\/c287\/6557,6558,6559,6560,6561,6562"
+    },
+    "populacao_por_idade": [
+        {
+            "idade": "Menos de 1 ano",
+            "codigo_sidra": "6557",
+            "populacao": 265,
+            "percentual_0a5": 16.35
+        },
+        {
+            "idade": "1 ano",
+            "codigo_sidra": "6558",
+            "populacao": 207,
+            "percentual_0a5": 12.77
+        },
+        {
+            "idade": "2 anos",
+            "codigo_sidra": "6559",
+            "populacao": 285,
+            "percentual_0a5": 17.58
+        },
+        {
+            "idade": "3 anos",
+            "codigo_sidra": "6560",
+            "populacao": 311,
+            "percentual_0a5": 19.19
+        },
+        {
+            "idade": "4 anos",
+            "codigo_sidra": "6561",
+            "populacao": 278,
+            "percentual_0a5": 17.15
+        },
+        {
+            "idade": "5 anos",
+            "codigo_sidra": "6562",
+            "populacao": 275,
+            "percentual_0a5": 16.96
+        }
+    ],
+    "totais": {
+        "creche_0a3": {
+            "faixa": "0 a 3 anos",
+            "total": 1068,
+            "descricao": "Demanda potencial para Creche"
+        },
+        "pre_escola_4a5": {
+            "faixa": "4 a 5 anos",
+            "total": 553,
+            "descricao": "Demanda potencial para Pré-escola"
+        },
+        "total_0a5": {
+            "faixa": "0 a 5 anos",
+            "total": 1621,
+            "descricao": "Total primeira infância"
+        }
+    },
+    "analise_demanda": {
+        "creche": {
+            "demanda_potencial": 1068,
+            "meta_pne_50_porcento": 534,
+            "observacao": "Meta 1 do PNE exige mínimo 50% de atendimento em creche"
+        },
+        "pre_escola": {
+            "demanda_potencial": 553,
+            "meta_pne_100_porcento": 553,
+            "observacao": "CF\/88 e PNE exigem universalização (100%) da pré-escola"
+        }
+    }
+}
