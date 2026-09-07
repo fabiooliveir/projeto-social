@@ -122,7 +122,7 @@
                     <tr>
                         <th scope="row" class="px-6 py-4 align-top font-semibold text-slate-800">Espaços Lúdicos & Primeira Infância</th>
                         <td class="px-6 py-4 align-top text-slate-600">Somente {{ $num($infra['itens']['com_bercario_lactario_creche_pct'] ?? 0) }}% das unidades têm berçário/lactário e {{ $num($infra['itens']['com_parque_infantil_ludico_pct'] ?? 0) }}% têm parque infantil.</td>
-                        <td class="px-6 py-4 align-top text-teal-800">Berçário climatizado, lactário e parque sensorial adaptado para o desenvolvimento psicomotor da primeira infância.</td>
+                        <td class="px-6 py-4 align-top text-teal-800">Salas de Educação Infantil amplas e lúdicas, brinquedoteca pedagógica e parque infantil adaptado para o estímulo psicomotor e socialização da infância.</td>
                     </tr>
                     <tr>
                         <th scope="row" class="px-6 py-4 align-top font-semibold text-slate-800">Auditório Multiuso</th>
@@ -157,7 +157,7 @@
                     <ul class="mt-2 space-y-2 leading-relaxed text-slate-600">
                         <li><strong>Conteúdo de qualidade comprovada:</strong> IDEB {{ $num($idebAI['nota_recente'] ?? 0) }} a {{ $num($idebAF['nota_recente'] ?? 0) }} com meta MEC de {{ $num($idebAI['meta_recente'] ?? 0) }} a {{ $num($idebAF['meta_recente'] ?? 0) }} — a escola nova mira o padrão que a rede ainda não alcança.</li>
                         <li><strong>Combate à evasão:</strong> cada ponto de distorção recuperado pelo contraturno é uma vida escolar resgatada.</li>
-                        <li><strong>Infraestrutura que o Censo revela:</strong> berçário, lactário e parque sensorial — exatamente os itens mais escassos ({{ $num($infra['itens']['com_bercario_lactario_creche_pct'] ?? 0) }}% e {{ $num($infra['itens']['com_parque_infantil_ludico_pct'] ?? 0) }}%).</li>
+                        <li><strong>Infraestrutura que o Censo revela:</strong> enquanto {{ $num(100 - ($infra['itens']['com_parque_infantil_ludico_pct'] ?? 0)) }}% das escolas da cidade não têm parque infantil, a nova escola entrega parque adaptado, brinquedoteca e o auditório multiuso.</li>
                     </ul>
                 </div>
                 @if ($diag)

@@ -63,6 +63,19 @@ final class EducationDashboardTest extends TestCase
         }
     }
 
+    public function testPainelNaoPrometeBercarioComoEscopoDaInstituicao(): void
+    {
+        [$status, $body] = $this->request('GET', '/painel-educacao');
+
+        $this->assertSame(200, $status);
+        $this->assertStringContainsString('Salas de Educação Infantil amplas e lúdicas', $body);
+        $this->assertStringContainsString('brinquedoteca pedagógica', $body);
+        $this->assertStringContainsString('parque infantil adaptado', $body);
+        $this->assertStringContainsString('não inclui berçário', $body);
+        $this->assertStringNotContainsString('Berçário climatizado, lactário e parque sensorial adaptado', $body);
+        $this->assertStringNotContainsString('berçário, lactário e parque sensorial', $body);
+    }
+
     public function testApiIndicadoresQualidadeRetornaIdebEInfraestrutura(): void
     {
         [$status, $body] = $this->request('GET', '/api/indicadores/qualidade');

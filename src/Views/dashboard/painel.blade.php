@@ -27,7 +27,7 @@
         {{-- Alternador de visão --}}
         <div role="tablist" aria-label="Visões do diagnóstico" class="inline-flex w-full max-w-2xl flex-wrap gap-1 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-sm sm:w-auto">
             <button type="button" id="tab-infancia" role="tab" aria-controls="panel-infancia" aria-selected="true" data-tab-target="panel-infancia" class="tab-btn tab-btn-ativo flex-1 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-bold transition">
-                Foco Prioritário: Primeira Infância (0 a 5)
+                Foco Prioritário: Educação Infantil (a partir de 2 anos)
             </button>
             <button type="button" id="tab-ecossistema" role="tab" aria-controls="panel-ecossistema" aria-selected="false" data-tab-target="panel-ecossistema" class="tab-btn flex-1 whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-bold transition">
                 Ecossistema Completo (0 a 17)

@@ -25,7 +25,7 @@
     botoes.forEach((botao) => {
         botao.addEventListener('click', () => {
             alternar(botao.dataset.tabTarget);
-            history.replaceState(null, '', `#${botao.id}`);
+            history.replaceState(null, '', `#${botao.dataset.tabTarget}`);
         });
     });
 

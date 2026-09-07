@@ -150,6 +150,20 @@ final class QualityIndicatorsApiTest extends TestCase
         $this->assertGreaterThanOrEqual(1, count($diag['pontos_criticos']));
     }
 
+    public function testDiagnosticoRefleteEscopoSemBercario(): void
+    {
+        [$status, $body] = $this->request('GET', '/api/indicadores/qualidade');
+
+        $this->assertSame(200, $status);
+        $json = json_decode($body, true);
+
+        $impacto = $json['diagnostico_qualitativo']['impacto_projeto_social'];
+        $this->assertStringContainsString('não inclui berçário', $impacto);
+        $this->assertStringContainsString('a partir de 2 anos', $impacto);
+        $this->assertStringContainsString('2.669', $impacto);
+        $this->assertStringContainsString('Auditório Multiuso', $impacto);
+    }
+
     /**
      * Executa o front controller real com um request HTTP simulado.
      *
