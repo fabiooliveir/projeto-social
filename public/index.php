@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use App\Controllers\EducationDashboardController;
+use App\Controllers\QualityIndicatorsController;
+use App\Services\QualityIndicatorsService;
 use Bramus\Router\Router;
 use Jenssegers\Blade\Blade;
 use Jenssegers\Blade\Container;
@@ -34,6 +36,12 @@ $router->get('/', function () {
 $router->get('/painel-educacao', [new EducationDashboardController($blade), 'index']);
 $router->get('/api/indicadores/guapo', [new EducationDashboardController($blade), 'apiIndicadores']);
 $router->get('/api/indicadores/guapo/download', [new EducationDashboardController($blade), 'baixarDiagnostico']);
+
+$qualityController = new QualityIndicatorsController(new QualityIndicatorsService());
+$router->get('/api/indicadores/qualidade', [$qualityController, 'index']);
+$router->get('/api/indicadores/qualidade/ideb', [$qualityController, 'ideb']);
+$router->get('/api/indicadores/qualidade/infraestrutura', [$qualityController, 'infraestrutura']);
+$router->get('/api/indicadores/qualidade/download', [$qualityController, 'download']);
 
 $router->set404(function () {
     http_response_code(404);

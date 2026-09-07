@@ -1,0 +1,11 @@
+{
+    "distorcao_idade_serie_anos_iniciais_pct": 7.8,
+    "distorcao_idade_serie_anos_finais_pct": 16.4,
+    "adequacao_formacao_docente_grupo1_pct": 74.5,
+    "media_alunos_turma": {
+        "creche": 15.2,
+        "pre_escola": 21.8,
+        "fundamental_anos_iniciais": 24.5,
+        "fundamental_anos_finais": 28.3
+    }
+}

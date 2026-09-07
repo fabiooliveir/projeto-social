@@ -1,0 +1,32 @@
+{
+    "serie_historica": [
+        {
+            "ano": 2017,
+            "nota": 6.1,
+            "meta": 5.4
+        },
+        {
+            "ano": 2019,
+            "nota": 6.3,
+            "meta": 5.7
+        },
+        {
+            "ano": 2021,
+            "nota": 5.8,
+            "meta": 6
+        },
+        {
+            "ano": 2023,
+            "nota": 6,
+            "meta": 6.2
+        }
+    ],
+    "nota_recente": 6,
+    "meta_recente": 6.2,
+    "taxa_aprovacao_pct": 98.2,
+    "benchmark": {
+        "guapo": 6,
+        "goias": 6.2,
+        "brasil": 6
+    }
+}

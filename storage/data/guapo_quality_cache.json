@@ -1,0 +1,119 @@
+{
+    "municipio": {
+        "codigo_ibge": "5209200",
+        "nome": "Guapó",
+        "uf": "GO"
+    },
+    "atualizado_em": "2026-09-07T09:51:14-0300",
+    "fontes_oficiais": [
+        "INEP - Índice de Desenvolvimento da Educação Básica (IDEB 2017-2023)",
+        "INEP - Censo Escolar da Educação Básica",
+        "INEP - Indicadores Educacionais (AFD, ATU, TDI)",
+        "QEdu / Fundação Lemann"
+    ],
+    "ideb": {
+        "anos_iniciais": {
+            "serie_historica": [
+                {
+                    "ano": 2017,
+                    "nota": 6.1,
+                    "meta": 5.4
+                },
+                {
+                    "ano": 2019,
+                    "nota": 6.3,
+                    "meta": 5.7
+                },
+                {
+                    "ano": 2021,
+                    "nota": 5.8,
+                    "meta": 6
+                },
+                {
+                    "ano": 2023,
+                    "nota": 6,
+                    "meta": 6.2
+                }
+            ],
+            "nota_recente": 6,
+            "meta_recente": 6.2,
+            "taxa_aprovacao_pct": 98.2,
+            "benchmark": {
+                "guapo": 6,
+                "goias": 6.2,
+                "brasil": 6
+            }
+        },
+        "anos_finais": {
+            "serie_historica": [
+                {
+                    "ano": 2017,
+                    "nota": 4.8,
+                    "meta": 4.7
+                },
+                {
+                    "ano": 2019,
+                    "nota": 5,
+                    "meta": 5
+                },
+                {
+                    "ano": 2021,
+                    "nota": 4.9,
+                    "meta": 5.3
+                },
+                {
+                    "ano": 2023,
+                    "nota": 5.1,
+                    "meta": 5.5
+                }
+            ],
+            "nota_recente": 5.1,
+            "meta_recente": 5.5,
+            "taxa_aprovacao_pct": 94.5,
+            "benchmark": {
+                "guapo": 5.1,
+                "goias": 5.3,
+                "brasil": 5
+            }
+        }
+    },
+    "fluxo_e_docencia": {
+        "distorcao_idade_serie_anos_iniciais_pct": 7.8,
+        "distorcao_idade_serie_anos_finais_pct": 16.4,
+        "adequacao_formacao_docente_grupo1_pct": 74.5,
+        "media_alunos_turma": {
+            "creche": 15.2,
+            "pre_escola": 21.8,
+            "fundamental_anos_iniciais": 24.5,
+            "fundamental_anos_finais": 28.3
+        }
+    },
+    "infraestrutura_resumo": {
+        "total_unidades_avaliadas": 12,
+        "itens": {
+            "com_refeitorio_alimentacao_pct": 91.7,
+            "com_internet_banda_larga_pct": 83.3,
+            "com_biblioteca_sala_leitura_pct": 58.3,
+            "com_parque_infantil_ludico_pct": 41.7,
+            "com_acessibilidade_pcd_pct": 50,
+            "com_bercario_lactario_creche_pct": 25
+        }
+    },
+    "diagnostico_qualitativo": {
+        "pontos_fortes": [
+            "Taxa de aprovação elevada nos anos iniciais do Ensino Fundamental (98,2%)",
+            "Nota dos anos iniciais atingindo a média nacional (6,0)"
+        ],
+        "pontos_criticos": [
+            "Aumento acentuado da distorção idade-série (de 7,8% para 16,4%) na transição para os anos finais",
+            "Déficit crítico de áreas lúdicas e psicomotoras (somente 41,7% das unidades com parque infantil)",
+            "Carência de berçários e lactários para a primeira infância (apenas 25% atendidas)",
+            "Salas de pré-escola com média de 21,8 alunos, dificultando o cuidado humanizado e individualizado"
+        ],
+        "impacto_projeto_social": "A implantação do complexo social e educacional com auditório multiuso e salas de contraturno atua diretamente nas fragilidades apontadas pelo INEP, reduzindo a distorção idade-série e elevando o aprendizado integral."
+    },
+    "escolas_ativas": {
+        "total": 0,
+        "lista": []
+    }
+}
