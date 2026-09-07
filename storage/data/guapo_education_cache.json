@@ -1,0 +1,61 @@
+{
+    "municipio": {
+        "codigo_ibge": "5209200",
+        "nome": "Guapó",
+        "uf": "GO"
+    },
+    "atualizado_em": "2026-09-06T22:49:44-03:00",
+    "tempo_execucao_ms": 540,
+    "resumo_executivo": {
+        "populacao_0a3_anos": 1068,
+        "vagas_creche_atual_2025": 289,
+        "deficit_vagas_creche": 779,
+        "taxa_desatendimento_creche_pct": 72.94,
+        "meta_pne_minima_50pct": 534,
+        "vagas_faltantes_para_pne": 245,
+        "populacao_4a5_anos": 553,
+        "vagas_pre_escola_atual_2025": 514,
+        "taxa_cobertura_pre_escola_pct": 92.95
+    },
+    "piramide_etaria": [
+        {
+            "idade": "Menos de 1 ano",
+            "populacao": 265
+        },
+        {
+            "idade": "1 ano",
+            "populacao": 207
+        },
+        {
+            "idade": "2 anos",
+            "populacao": 285
+        },
+        {
+            "idade": "3 anos",
+            "populacao": 311
+        },
+        {
+            "idade": "4 anos",
+            "populacao": 278
+        },
+        {
+            "idade": "5 anos",
+            "populacao": 275
+        }
+    ],
+    "series_historicas": {
+        "creche_municipal": {
+            "2008": 121,
+            "2013": 61,
+            "2018": 249,
+            "2022": 237,
+            "2025": 289
+        },
+        "pre_escola_municipal": {
+            "2008": 184,
+            "2015": 480,
+            "2022": 437,
+            "2025": 514
+        }
+    }
+}
