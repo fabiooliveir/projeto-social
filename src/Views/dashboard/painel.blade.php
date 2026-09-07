@@ -62,6 +62,15 @@
 
         {{-- Gráficos --}}
         <div class="mt-10">
+            <script type="application/json" id="guapo-data">
+{!! json_encode([
+    'municipio' => $municipio,
+    'atualizado_em' => $atualizado_em,
+    'resumo_executivo' => $resumo_executivo,
+    'piramide_etaria' => $piramide_etaria,
+    'series_historicas' => $series_historicas,
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
+            </script>
             @include('dashboard.components.charts-grid')
         </div>
 
@@ -115,4 +124,8 @@
         </div>
     </footer>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="/js/chartjs-helpers.js"></script>
+<script src="/js/charts-guapo.js"></script>
 @endsection
