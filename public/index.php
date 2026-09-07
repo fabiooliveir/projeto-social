@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
+error_reporting(E_ALL & ~E_DEPRECATED);
+
 use App\Controllers\EducationDashboardController;
+use App\Controllers\LandingPageController;
 use App\Controllers\QualityIndicatorsController;
 use App\Services\QualityIndicatorsService;
 use Bramus\Router\Router;
@@ -28,10 +31,12 @@ $router = new Router();
 
 $router->setBasePath('');
 
-$router->get('/', function () {
-    header('Location: /painel-educacao');
-    exit;
-});
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$router->get('/', [new LandingPageController($blade), 'index']);
+$router->post('/contato', [new LandingPageController($blade), 'enviarContato']);
 
 $router->get('/painel-educacao', [new EducationDashboardController($blade), 'index']);
 $router->get('/api/indicadores/guapo', [new EducationDashboardController($blade), 'apiIndicadores']);
