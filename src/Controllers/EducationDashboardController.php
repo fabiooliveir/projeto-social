@@ -47,6 +47,20 @@ final class EducationDashboardController
     }
 
     /**
+     * Download do diagnóstico completo em JSON (CTA do painel).
+     */
+    public function baixarDiagnostico(): void
+    {
+        $payload = $this->payload();
+
+        header('Content-Type: application/json; charset=utf-8');
+        header('Content-Disposition: attachment; filename="diagnostico-educacional-guapo-0a17.json"');
+        header('Cache-Control: public, max-age=3600');
+
+        echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    }
+
+    /**
      * Carrega o cache consolidado; se ausente, dispara o pipeline de sync.
      *
      * @return array<string, mixed>

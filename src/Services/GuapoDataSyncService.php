@@ -16,6 +16,7 @@ final class GuapoDataSyncService
     public const URL_CRECHE_MUNICIPAL = 'https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/77883/resultados/5209200';
     public const URL_PRE_ESCOLA_MUNICIPAL = 'https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/5904/resultados/5209200';
     public const URL_1_ANO_FUNDAMENTAL = 'https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/77899/resultados/5209200';
+    public const URL_EF_TOTAL = 'https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/5908/resultados/5209200';
 
     private const CATEGORIA_CRECHE = [6557, 6558, 6559, 6560];
     private const CATEGORIA_PRE_ESCOLA = [6561, 6562];
@@ -75,11 +76,16 @@ final class GuapoDataSyncService
         $fund1Ano = $this->client->fetchJson(self::URL_1_ANO_FUNDAMENTAL, 'fundamental_1_ano');
         $this->logOk();
 
+        $this->log('[INEP] Coletando Censo Escolar (Ensino Fundamental total - 5908)...', 'server');
+        $efTotal = $this->client->fetchJson(self::URL_EF_TOTAL, 'fundamental_total');
+        $this->logOk();
+
         $this->log('[CALC] Processando déficit, metas do PNE e transição...', 'server');
         $piramide = $this->parseCenso2022($censo);
         $crecheSerie = $this->parseSeriePesquisa13($creche);
         $preEscolaSerie = $this->parseSeriePesquisa13($preEscola);
         $fund1AnoSerie = $this->parseSeriePesquisa13($fund1Ano);
+        $efTotalSerie = $this->parseSeriePesquisa13($efTotal);
         $resumo = $this->calcularResumo($piramide, $crecheSerie, $preEscolaSerie, $fund1AnoSerie);
         $this->logOk();
 
@@ -93,6 +99,7 @@ final class GuapoDataSyncService
                 'creche_municipal'    => array_filter($crecheSerie, fn ($ano) => in_array($ano, [2008, 2013, 2018, 2022, 2025], true), ARRAY_FILTER_USE_KEY),
                 'pre_escola_municipal' => array_filter($preEscolaSerie, fn ($ano) => in_array($ano, [2008, 2015, 2022, 2025], true), ARRAY_FILTER_USE_KEY),
                 'fundamental_1_ano'    => array_filter($fund1AnoSerie, fn ($ano) => in_array($ano, [2008, 2013, 2018, 2022, 2025], true), ARRAY_FILTER_USE_KEY),
+                'fundamental_total'    => array_filter($efTotalSerie, fn ($ano) => in_array($ano, [2008, 2013, 2018, 2022, 2025], true), ARRAY_FILTER_USE_KEY),
             ],
         );
 
@@ -187,6 +194,7 @@ final class GuapoDataSyncService
         $popMedio = 0;
         $popTotal = 0;
         $pop5Anos = 0;
+        $popContraturno = 0;
 
         foreach ($piramide as $e) {
             $codigo = $this->codigoDoRotulo($e['idade']);
@@ -214,6 +222,7 @@ final class GuapoDataSyncService
         $matriculas1AnoFund = $fund1AnoSerie[(string) self::ANO_MATRICULA_ATUAL] ?? 0;
 
         $deficit = $popCreche - $vagasCreche;
+        $popContraturno = $popFund1 + $popFund2;
         $taxaDesatendimento = $popCreche > 0 ? round($deficit / $popCreche * 100, 2) : 0.0;
         $metaPne = (int) round($popCreche * 0.50);
         $gapPne = $metaPne - $vagasCreche;
@@ -232,6 +241,7 @@ final class GuapoDataSyncService
             'taxa_cobertura_pre_escola_pct'    => $coberturaPreEscola,
             'populacao_fundamental_1_6a10'     => $popFund1,
             'populacao_fundamental_2_11a14'    => $popFund2,
+            'populacao_contraturno_6a14'       => $popContraturno,
             'populacao_medio_15a17'            => $popMedio,
             'populacao_total_escolar_0a17'     => $popTotal,
             'matriculas_1ano_fundamental_2025' => $matriculas1AnoFund,

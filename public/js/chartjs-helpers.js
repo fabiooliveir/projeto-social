@@ -3,10 +3,14 @@
 
     const PALETA = {
         azul: '#3B82F6',
+        azulRoyal: '#2563EB',
         vermelho: '#EF4444',
         ambar: '#F59E0B',
+        amarelo: '#FBBF24',
         turquesa: '#10B981',
         indigo: '#6366F1',
+        violeta: '#8B5CF6',
+        coral: '#FB7185',
         eslate: '#64748B',
     };
 

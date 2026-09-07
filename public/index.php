@@ -33,6 +33,7 @@ $router->get('/', function () {
 
 $router->get('/painel-educacao', [new EducationDashboardController($blade), 'index']);
 $router->get('/api/indicadores/guapo', [new EducationDashboardController($blade), 'apiIndicadores']);
+$router->get('/api/indicadores/guapo/download', [new EducationDashboardController($blade), 'baixarDiagnostico']);
 
 $router->set404(function () {
     http_response_code(404);

@@ -40,6 +40,9 @@ docker compose up -d app
 
 - Dashboard: http://localhost:8000/painel-educacao
 - API JSON:  http://localhost:8000/api/indicadores/guapo
+- Download JSON: http://localhost:8000/api/indicadores/guapo/download
+
+O painel alterna entre duas visões (abas): **Foco Prioritário: Primeira Infância (0 a 5)** e **Ecossistema Completo (0 a 17)**, com 5 KPIs, pirâmide etária segmentada por etapa escolar, gráficos de déficit/PNE, evolução histórica (creche, pré-escola e Ensino Fundamental), camada de storytelling com personas e CTA de captação.
 
 ## Testes
 

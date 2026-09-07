@@ -13,7 +13,7 @@ Cliente HTTP (Guzzle)
 IbgeApiClient ──► Cache em disco (storage/cache/)
       │
       ▼
-GuapoDataSyncService  ──► 4 endpoints oficiais
+GuapoDataSyncService  ──► 5 endpoints oficiais
       │
       ├─ parseCenso2022()       (Tabela 9514 / API v3 - 0 a 17 anos)
       ├─ parseSeriePesquisa13() (INEP - Pesquisa 13)
@@ -33,6 +33,7 @@ storage/data/guapo_education_cache.json
 | 2 | Matrículas em Creche Municipal (Pesquisa 13 - 77883) | `https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/77883/resultados/5209200` |
 | 3 | Matrículas em Pré-escola Municipal (Pesquisa 13 - 5904) | `https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/5904/resultados/5209200` |
 | 4 | Matrículas no 1º ano do EF (Pesquisa 13 - 77899) | `https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/77899/resultados/5209200` |
+| 5 | Matrículas no Ensino Fundamental total (Pesquisa 13 - 5908) | `https://servicodados.ibge.gov.br/api/v1/pesquisas/13/indicadores/5908/resultados/5209200` |
 
 ## Componentes
 
@@ -47,12 +48,13 @@ storage/data/guapo_education_cache.json
 
 Orquestrador responsável por:
 
-1. Disparar as 4 requisições (sequenciais nesta versão; prontas para evoluir para Guzzle Pool/Promises).
+1. Disparar as 5 requisições (sequenciais nesta versão; prontas para evoluir para Guzzle Pool/Promises).
 2. Fazer o parsing das respostas:
    - **Censo 2022 (9514):** categorias `6557–6560` → creche; `6561–6562` → pré-escola; `6563–6567` → Fundamental I (6-10 anos); `6568–6571` → Fundamental II (11-14 anos); `6572–6574` → Ensino Médio (15-17 anos). Total 0-17 = 5.107.
    - **Censo Escolar (77883):** série histórica e matrícula de 2025 (289).
    - **Censo Escolar (5904):** série histórica e matrícula de 2025 (514).
    - **Censo Escolar (77899):** matrículas no 1º ano do EF (2025 = 306) para a taxa de transição.
+   - **Censo Escolar (5908):** série histórica de matrículas no EF total (2025 = 2.656) para o gráfico evolutivo.
 3. Calcular indicadores:
    - Déficit absoluto de creche: `1.068 − 289 = 779`.
    - Taxa de desatendimento: `779 / 1.068 = 72,94%`.
@@ -60,12 +62,13 @@ Orquestrador responsável por:
    - Gap legal: `534 − 289 = 245 vagas adicionais`.
    - Cobertura pré-escola: `514 / 553 = 92,95%`.
    - População Fundamental I/II e Médio: `1.482 / 1.187 / 817`; total 0-17 = `5.107`.
+   - **Público de contraturno (6-14):** `1.482 + 1.187 = 2.669` (Fundamental I + II).
    - Transição pré-escola → 1º ano EF: `306 / 275 = 111,27%` (sem evasão estrutural no fluxo).
 4. Persistir o payload em `storage/data/guapo_education_cache.json`.
 
 ### EducationDashboardPayload
 
-Modelo de valor (value object) com `toArray()`, pensado para serialização direta em JSON consumível por Chart.js / ApexCharts.
+Modelo de valor (value object) com `toArray()`, pensado para serialização direta em JSON consumível por Chart.js / ApexCharts. O painel consome o cache nos endpoints `GET /painel-educacao`, `GET /api/indicadores/guapo` e `GET /api/indicadores/guapo/download` (download do diagnóstico em JSON).
 
 ### bin/sync_guapo_data.php
 

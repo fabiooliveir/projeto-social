@@ -35,6 +35,7 @@ final class GuapoDataSyncServiceTest extends TestCase
             new Response(200, [], json_encode($this->crecheFixture())),
             new Response(200, [], json_encode($this->preEscolaFixture())),
             new Response(200, [], json_encode($this->fund1AnoFixture())),
+            new Response(200, [], json_encode($this->efFixture())),
         ]);
 
         $client = new Client(['handler' => HandlerStack::create($mock)]);
@@ -53,6 +54,12 @@ final class GuapoDataSyncServiceTest extends TestCase
         $this->assertSame(817, $payload->resumoExecutivo['populacao_medio_15a17']);
         $this->assertSame(5107, $payload->resumoExecutivo['populacao_total_escolar_0a17']);
         $this->assertSame(306, $payload->resumoExecutivo['matriculas_1ano_fundamental_2025']);
+
+        // Público de contraturno (Fundamental I + II) — Sub-issue 2.4
+        $this->assertSame(2669, $payload->resumoExecutivo['populacao_contraturno_6a14']);
+        $this->assertArrayHasKey('fundamental_total', $payload->seriesHistoricas);
+        $this->assertSame(2327, $payload->seriesHistoricas['fundamental_total']['2008']);
+        $this->assertSame(2656, $payload->seriesHistoricas['fundamental_total']['2025']);
 
         // Primeira faixa etária (0 anos)
         $this->assertSame('Menos de 1 ano', $payload->piramideEtaria[0]['idade']);
@@ -86,6 +93,9 @@ final class GuapoDataSyncServiceTest extends TestCase
         $this->assertSame(5107, $resumo['populacao_total_escolar_0a17']);
         $this->assertSame(306, $resumo['matriculas_1ano_fundamental_2025']);
         $this->assertSame(111.27, $resumo['taxa_transicao_pre_fundamental_pct']);
+
+        // Sub-issue 2.4: público de contraturno (6 a 14 anos)
+        $this->assertSame(2669, $resumo['populacao_contraturno_6a14']);
     }
 
     public function testApiFalhaUsaCacheFallback(): void
@@ -96,6 +106,7 @@ final class GuapoDataSyncServiceTest extends TestCase
             new Response(200, [], json_encode($this->crecheFixture())),
             new Response(200, [], json_encode($this->preEscolaFixture())),
             new Response(200, [], json_encode($this->fund1AnoFixture())),
+            new Response(200, [], json_encode($this->efFixture())),
         ]);
         $apiOk = new IbgeApiClient(
             new Client(['handler' => HandlerStack::create($mockOk)]),
@@ -105,6 +116,7 @@ final class GuapoDataSyncServiceTest extends TestCase
 
         // Agora simula falha: HTTP 500 em todos os endpoints.
         $mockFail = new MockHandler([
+            new Response(500, [], 'erro'),
             new Response(500, [], 'erro'),
             new Response(500, [], 'erro'),
             new Response(500, [], 'erro'),
@@ -267,6 +279,34 @@ final class GuapoDataSyncServiceTest extends TestCase
             2013 => 260, 2014 => 268, 2015 => 290, 2016 => 282, 2017 => 285,
             2018 => 300, 2019 => 291, 2020 => 288, 2021 => 274, 2022 => 295,
             2023 => 301, 2024 => 308, 2025 => 306,
+        ][$ano] ?? 0;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function efFixture(): array
+    {
+        $res = [];
+        foreach (range(2008, 2025) as $ano) {
+            $res[(string) $ano] = (string) $this->efPorAno($ano);
+        }
+
+        return [[
+            'id' => 5908,
+            'res' => [
+                ['localidade' => '520920', 'res' => $res, 'notas' => []],
+            ],
+        ]];
+    }
+
+    private function efPorAno(int $ano): int
+    {
+        return [
+            2008 => 2327, 2009 => 2300, 2010 => 2320, 2011 => 2110, 2012 => 2227,
+            2013 => 2093, 2014 => 2079, 2015 => 1961, 2016 => 1948, 2017 => 1982,
+            2018 => 2115, 2019 => 2133, 2020 => 2211, 2021 => 2273, 2022 => 2416,
+            2023 => 2502, 2024 => 2644, 2025 => 2656,
         ][$ano] ?? 0;
     }
 

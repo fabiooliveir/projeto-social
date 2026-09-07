@@ -3,6 +3,8 @@
 
     const H = window.GuapoChartHelpers;
 
+    let dadosCache = null;
+
     const carregarDados = () => {
         const script = document.getElementById('guapo-data');
         if (script && script.textContent.trim()) {
@@ -25,6 +27,7 @@
         const series = dados.series_historicas || {};
         const creche = series.creche_municipal || {};
         const pre = series.pre_escola_municipal || {};
+        const ef = series.fundamental_total || {};
         const anos = [];
         for (let ano = 2008; ano <= 2025; ano++) {
             anos.push(String(ano));
@@ -38,6 +41,19 @@
             data: {
                 labels: anos,
                 datasets: [
+                    {
+                        label: 'Ensino Fundamental (total)',
+                        data: valores(ef),
+                        borderColor: H.PALETA.violeta,
+                        backgroundColor: (ctx) => H.gradienteVertical(ctx, H.PALETA.violeta, 0.25),
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointRadius: 4,
+                        pointBackgroundColor: H.PALETA.violeta,
+                        pointBorderColor: '#fff',
+                        spanGaps: true,
+                    },
                     {
                         label: 'Creche Municipal (0-3)',
                         data: valores(creche),
@@ -69,6 +85,7 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
                 plugins: {
                     legend: H.legendaPadrao,
                     tooltip: {
@@ -77,7 +94,7 @@
                             title: (items) => `Ano ${items[0]?.label ?? ''}`,
                             label: (ctx) => {
                                 if (ctx.parsed.y === null) {
-                                    return 'Sem registro no Censo Escolar';
+                                    return ` ${ctx.dataset.label}: Sem registro no Censo Escolar`;
                                 }
                                 return ` ${ctx.dataset.label}: ${H.formatarMilhar(ctx.parsed.y)} matrículas`;
                             },
@@ -87,7 +104,7 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        suggestedMax: 600,
+                        suggestedMax: 3000,
                         grid: { color: 'rgba(148,163,184,0.15)' },
                         ticks: { callback: (v) => H.formatarMilhar(v) },
                         title: { display: true, text: 'Matrículas', color: '#64748B' },
@@ -243,6 +260,105 @@
         });
     };
 
+    const ETAPAS_PIRAMIDE = [
+        { nomes: ['Menos de 1 ano', '1 ano', '2 anos', '3 anos'], curto: 'Creche', cor: H.PALETA.coral },
+        { nomes: ['4 anos', '5 anos'], curto: 'Pré-escola', cor: H.PALETA.amarelo },
+        { nomes: ['6 anos', '7 anos', '8 anos', '9 anos', '10 anos'], curto: 'Fundamental I', cor: H.PALETA.azulRoyal },
+        { nomes: ['11 anos', '12 anos', '13 anos', '14 anos'], curto: 'Fundamental II', cor: H.PALETA.indigo },
+        { nomes: ['15 anos', '16 anos', '17 anos'], curto: 'Ensino Médio', cor: H.PALETA.violeta },
+    ];
+
+    const construirPiramide = (canvas, dados) => {
+        const piramide = dados.piramide_etaria || [];
+
+        const porEtapa = {};
+        ETAPAS_PIRAMIDE.forEach((etapa) => {
+            porEtapa[etapa.curto] = etapa;
+        });
+
+        const nomesCompletos = piramide.map((e) => e.idade);
+        const rotulos = piramide.map((e) => {
+            const idade = e.idade.replace('Menos de 1 ano', '0');
+            return idade.replace(' anos', '');
+        });
+        const populacoes = piramide.map((e) => Number(e.populacao));
+        const cores = piramide.map((e) => {
+            for (const etapa of ETAPAS_PIRAMIDE) {
+                if (etapa.nomes.includes(e.idade)) {
+                    return etapa.cor;
+                }
+            }
+            return H.PALETA.eslate;
+        });
+
+        return new window.Chart(canvas, {
+            type: 'bar',
+            data: {
+                labels: rotulos,
+                datasets: [{
+                    data: populacoes,
+                    backgroundColor: cores,
+                    borderRadius: 6,
+                    barPercentage: 0.9,
+                    categoryPercentage: 0.85,
+                }],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            ...H.legendaPadrao.labels,
+                            generateLabels: () => ETAPAS_PIRAMIDE.map((etapa) => ({
+                                text: `${etapa.curto} (${etapa.nomes[0]}–${etapa.nomes[etapa.nomes.length - 1]})`,
+                                fillStyle: etapa.cor,
+                                strokeStyle: etapa.cor,
+                                lineWidth: 0,
+                                hidden: false,
+                                index: 0,
+                            })),
+                        },
+                    },
+                    tooltip: {
+                        ...H.tooltipPadrao,
+                        callbacks: {
+                            title: (items) => {
+                                const idx = items[0]?.dataIndex;
+                                return idx === undefined ? '' : `Idade: ${nomesCompletos[idx]}`;
+                            },
+                            label: (ctx) => ` População: ${H.formatarMilhar(ctx.parsed.y)}`,
+                            afterLabel: (ctx) => {
+                                const idx = ctx.dataIndex;
+                                for (const etapa of ETAPAS_PIRAMIDE) {
+                                    if (etapa.nomes.includes(nomesCompletos[idx])) {
+                                        return ` Etapa: ${etapa.curto}`;
+                                    }
+                                }
+                                return '';
+                            },
+                        },
+                    },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(148,163,184,0.15)' },
+                        ticks: { callback: (v) => H.formatarMilhar(v) },
+                        title: { display: true, text: 'População (pessoas)', color: '#64748B' },
+                    },
+                    x: {
+                        grid: { display: false },
+                        title: { display: true, text: 'Idade (anos)', color: '#64748B' },
+                        ticks: { autoSkip: false },
+                    },
+                },
+            },
+        });
+    };
+
     const instancias = new Map();
 
     const renderizar = (dados) => {
@@ -253,6 +369,7 @@
             ['chartEvolucao', construirEvolucao],
             ['chartDeficit', construirDeficit],
             ['chartMetaPNE', construirMetaPNE],
+            ['chartPiramide', construirPiramide],
         ];
 
         alvos.forEach(([id, construtor]) => {
@@ -271,7 +388,17 @@
             return;
         }
         carregarDados()
-            .then(renderizar)
+            .then((dados) => {
+                dadosCache = dados;
+                renderizar(dados);
+            })
             .catch((err) => console.error('[charts-guapo] Falha ao renderizar gráficos.', err));
+    });
+
+    // Abas escondem/gradem painéis; ao alternar, redimensiona os gráficos afetados.
+    window.addEventListener('guapo:tabschange', () => {
+        if (dadosCache && typeof window.Chart !== 'undefined') {
+            renderizar(dadosCache);
+        }
     });
 })();

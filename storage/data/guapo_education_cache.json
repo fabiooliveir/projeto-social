@@ -4,8 +4,8 @@
         "nome": "Guapó",
         "uf": "GO"
     },
-    "atualizado_em": "2026-09-06T23:40:21-03:00",
-    "tempo_execucao_ms": 653,
+    "atualizado_em": "2026-09-06T23:52:56-03:00",
+    "tempo_execucao_ms": 616,
     "resumo_executivo": {
         "populacao_0a3_anos": 1068,
         "vagas_creche_atual_2025": 289,
@@ -18,6 +18,7 @@
         "taxa_cobertura_pre_escola_pct": 92.95,
         "populacao_fundamental_1_6a10": 1482,
         "populacao_fundamental_2_11a14": 1187,
+        "populacao_contraturno_6a14": 2669,
         "populacao_medio_15a17": 817,
         "populacao_total_escolar_0a17": 5107,
         "matriculas_1ano_fundamental_2025": 306,
@@ -117,6 +118,13 @@
             "2018": 228,
             "2022": 268,
             "2025": 306
+        },
+        "fundamental_total": {
+            "2008": 2327,
+            "2013": 2093,
+            "2018": 2115,
+            "2022": 2416,
+            "2025": 2656
         }
     }
 }
