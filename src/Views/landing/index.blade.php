@@ -80,26 +80,55 @@
         });
     }
 
-    if (copyBtn && pixKeyDisplay && copyFeedback) {
-        copyBtn.addEventListener('click', function() {
-            var key = pixKeyDisplay.textContent.trim();
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(key).then(function() {
-                    copyFeedback.classList.remove('hidden');
-                    setTimeout(function() { copyFeedback.classList.add('hidden'); }, 3000);
-                });
-            } else {
-                var ta = document.createElement('textarea');
-                ta.value = key;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                copyFeedback.classList.remove('hidden');
-                setTimeout(function() { copyFeedback.classList.add('hidden'); }, 3000);
+    var modalCopyBtn = document.getElementById('modal-copy-pix');
+    var modalPixKey = document.getElementById('modal-pix-key');
+    var modalCopyFeedback = document.getElementById('modal-copy-feedback');
+
+    function copyToClipboard(text, feedbackEl) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(function() {
+                if (feedbackEl) {
+                    feedbackEl.classList.remove('hidden');
+                    setTimeout(function() { feedbackEl.classList.add('hidden'); }, 3000);
+                }
+            });
+        } else {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            if (feedbackEl) {
+                feedbackEl.classList.remove('hidden');
+                setTimeout(function() { feedbackEl.classList.add('hidden'); }, 3000);
             }
+        }
+    }
+
+    if (copyBtn && pixKeyDisplay) {
+        copyBtn.addEventListener('click', function() {
+            copyToClipboard(pixKeyDisplay.textContent.trim(), copyFeedback);
         });
     }
+
+    if (modalCopyBtn && modalPixKey) {
+        modalCopyBtn.addEventListener('click', function() {
+            copyToClipboard(modalPixKey.textContent.trim(), modalCopyFeedback);
+        });
+    }
+
+    // Interação nos botões de valores sugeridos
+    document.querySelectorAll('.btn-valor-sugerido').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.btn-valor-sugerido').forEach(function(b) {
+                b.classList.remove('bg-brand-600', 'text-white', 'border-brand-600');
+                b.classList.add('bg-white', 'text-slate-800', 'border-slate-200');
+            });
+            this.classList.remove('bg-white', 'text-slate-800', 'border-slate-200');
+            this.classList.add('bg-brand-600', 'text-white', 'border-brand-600');
+        });
+    });
 
     var contactForm = document.getElementById('contact-form');
     if (contactForm) {

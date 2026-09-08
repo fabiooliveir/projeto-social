@@ -1,54 +1,62 @@
-<section id="projeto" class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white">
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-50"></div>
+<section id="projeto" class="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-brand-950 text-white">
+    <div class="absolute inset-0 bg-[radial-gradient(#0284c7_1px,transparent_1px)] [background-size:24px_24px] opacity-15"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
         <div class="max-w-3xl">
-            <div class="flex flex-wrap gap-2 mb-6">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                    🚧 Obra Fase 3 em Andamento
+            <div class="flex flex-wrap gap-2.5 mb-6">
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-amber-400/15 text-amber-300 border border-amber-400/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    Obra Fase 3 · Acabamentos a 68% Concluídos
                 </span>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                    ✔ Transparência & Prestação de Contas
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-hope-500/15 text-hope-300 border border-hope-500/30">
+                    <span>✓</span> Transparência & MROSC (Lei 13.019/2014)
                 </span>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                    🏛 Associação Sem Fins Lucrativos
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold bg-brand-500/15 text-brand-300 border border-brand-500/30">
+                    <span>🏛️</span> Escola com Auditório Multiuso
                 </span>
             </div>
 
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-6">
-                Educação Transformadora na Infância e Contraturno com <span class="text-emerald-400">Auditório Multiuso</span> em Guapó-GO
+            <h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold leading-tight sm:leading-tight lg:leading-tight mb-6 tracking-tight">
+                Programa de <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-hope-400">Educação Integral</span> & Contraturno Escolar com Auditório Multiuso
             </h1>
 
-            <p class="text-lg sm:text-xl text-slate-300 mb-8 leading-relaxed">
-                Transformando o futuro de crianças e jovens através de salas acolhedoras <strong class="text-white">(a partir de 2 anos)</strong>, oficinas de contraturno e o primeiro centro comunitário multiuso da região.
+            <p class="text-base sm:text-xl text-slate-300 mb-8 leading-relaxed font-normal">
+                Combatendo a distorção idade-série e a vulnerabilidade social em Guapó-GO: reforço escolar, oficinas de tecnologia e robótica, artes e acolhimento pedagógico integral para crianças e adolescentes (com salas preparadas para a Educação Infantil a partir de 2 anos e foco no contraturno de 6 a 14 anos).
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4">
-                <a href="#cotas" class="inline-flex items-center justify-center px-6 py-3 bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-900/30 text-base">
-                    🤝 Apadrinhar uma Cota
+                <a href="#cotas" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-gradient-to-r from-brand-600 to-brand-700 text-white font-bold rounded-2xl hover:from-brand-500 hover:to-brand-600 transition-all shadow-xl shadow-brand-900/40 hover:-translate-y-0.5 text-base">
+                    <span>🤝</span> Apadrinhar uma Cota
                 </a>
-                <a href="/api/indicadores/guapo/download" class="inline-flex items-center justify-center px-6 py-3 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/20 transition-all border border-white/20 text-base">
-                    📊 Acessar Diagnóstico Completo
+                <a href="#doar-pix" class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-gradient-to-r from-hope-600 to-emerald-600 text-white font-bold rounded-2xl hover:from-hope-500 hover:to-emerald-500 transition-all shadow-xl shadow-hope-900/30 hover:-translate-y-0.5 text-base">
+                    <span>⚡</span> Doar via PIX
+                </a>
+                <a href="/painel-educacao" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 text-white font-semibold rounded-2xl hover:bg-white/15 transition-all border border-white/20 text-base backdrop-blur-sm">
+                    <span>📊</span> Diagnóstico Completo
                 </a>
             </div>
         </div>
 
-        <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6">
-            <div class="text-center">
-                <div class="text-3xl sm:text-4xl font-extrabold text-emerald-400">2.502</div>
-                <div class="text-sm text-slate-400 mt-1">estudantes sem contraturno</div>
+        <div class="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                <div class="text-2xl sm:text-4xl font-extrabold text-hope-400 font-display">2.502</div>
+                <div class="text-xs sm:text-sm text-slate-300 font-medium mt-1">Estudantes sem Contraturno</div>
+                <div class="text-xs text-slate-400 mt-0.5">Turno único no Ensino Fundamental</div>
             </div>
-            <div class="text-center">
-                <div class="text-3xl sm:text-4xl font-extrabold text-amber-400">16,4%</div>
-                <div class="text-sm text-slate-400 mt-1">distorção idade-série</div>
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                <div class="text-2xl sm:text-4xl font-extrabold text-amber-400 font-display">16,4%</div>
+                <div class="text-xs sm:text-sm text-slate-300 font-medium mt-1">Distorção Idade-Série</div>
+                <div class="text-xs text-slate-400 mt-0.5">Salto nos anos finais (INEP)</div>
             </div>
-            <div class="text-center">
-                <div class="text-3xl sm:text-4xl font-extrabold text-blue-400">3</div>
-                <div class="text-sm text-slate-400 mt-1">turnos no auditório</div>
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                <div class="text-2xl sm:text-4xl font-extrabold text-cyan-400 font-display">3 Turnos</div>
+                <div class="text-xs sm:text-sm text-slate-300 font-medium mt-1">Auditório Multiuso</div>
+                <div class="text-xs text-slate-400 mt-0.5">Uso escolar e comunitário 100% ativo</div>
             </div>
-            <div class="text-center">
-                <div class="text-3xl sm:text-4xl font-extrabold text-rose-400">0</div>
-                <div class="text-sm text-slate-400 mt-1">berçários (não incluso)</div>
+            <div class="p-5 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition-colors">
+                <div class="text-2xl sm:text-4xl font-extrabold text-brand-400 font-display">5.107</div>
+                <div class="text-xs sm:text-sm text-slate-300 font-medium mt-1">Jovens em Guapó</div>
+                <div class="text-xs text-slate-400 mt-0.5">População escolar total (0-17)</div>
             </div>
         </div>
     </div>
